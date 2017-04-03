@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  background: #fcfcfa;
+}
+
+.stroke {
+  fill: none;
+  stroke: #000;
+  stroke-width: 3px;
+}
+
+.fill {
+  fill: #fff;
+}
+
+.graticule {
+  fill: none;
+  stroke: #777;
+  stroke-width: .5px;
+  stroke-opacity: .5;
+}
+
+.land {
+  fill: #222;
+}
+
+.boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-width: .5px;
+}
+
+
+</style>
+<body>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+<script src="https://d3js.org/topojson.v1.min.js"></script>
+<script src="http://d3js.org/queue.v1.min.js"></script>
+
+<script>
+
+var width = 960,
+    height = 580;
+
+//var color = d3.scale.category10();
+
+var minimumCO2 = 3.5
+var maximumCO2 = 35848600
+
+//creates a color scheme. This needs work, as carbon emissions can't be split properly. Might have to normalize the data. 
+
+var colors = d3.scaleLinear()
+    .domain(d3.ticks(minimumCO2, maximumCO2, 1000))
+    .range(['#d7191c','#fdae61','#ffffbf','#a6d96a','#1a9641']);
+
+var projection = d3.geoKavrayskiy7()
+    .scale(170)
+    .translate([width / 2, height / 2])
+    .precision(.1);
+
+var path = d3.geoPath()
+    .projection(projection);
+
+var graticule = d3.geoGraticule();
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+svg.append("defs").append("path")
+    .datum({type: "Sphere"})
+    .attr("id", "sphere")
+    .attr("d", path);
+
+svg.append("use")
+    .attr("class", "stroke")
+    .attr("xlink:href", "#sphere");
+
+svg.append("use")
+    .attr("class", "fill")
+    .attr("xlink:href", "#sphere");
+
+
+//add data to the queue or make different queues based on what the user selects.
+
+queue()
+  .defer(d3.json, "world110m.json")
+  .defer(d3.json, "carbonEmissions.json")
+  .await(carbonMap);
+
+
+function carbonMap(error, world, carbonEmissions){
+  var countries = topojson.feature(world, world.objects.countries).features;
+
+//create the world map
+
+  console.log(countries[0].id);
+  svg.selectAll(".country")
+      .data(countries)
+    .enter().insert("path", ".graticule")
+      .attr("class", "country")
+      .attr("d", path);
+      //.style("fill", function(d, i) { return color(d.color = d3.max(neighbors[i], function(n) { return countries[n].color; }) + 1 | 0); });
+
+  svg.insert("path", ".graticule")
+      .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
+      .attr("class", "boundary")
+      .attr("d", path);
+
+  console.log((carbonEmissions[0]['CountryID']));
+
+//join carbon emissions data to the TopoJSON for each year. So this will be done in a loop from 1970-2013
+
+  countries.forEach(function(country){
+    var result = carbonEmissions.filter(function(carbonEmission){
+      return carbonEmission['CountryID'] == country.id;
+    });
+    delete country.id;
+    country.carbonEmission = (result[0] !== undefined) ? result[0]['1970 [YR1970]'] : null;
+  });
+  console.log(colors(countries[0].carbonEmission));
+
+//fill the map based on the color scheme.
+
+  svg.selectAll(".country")
+      .data(countries)
+      .style("fill", function(d){return colors(d.carbonEmission)});
+
+}
+d3.select(self.frameElement).style("height", height + "px");
+
+
+</script>
