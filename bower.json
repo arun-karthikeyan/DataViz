@@ -18,6 +18,9 @@
   "dependencies": {
     "angular": "^1.6.4",
     "bootstrap": "v4.0.0-alpha.6",
-    "d3": "^4.7.4"
+    "d3": "^4.7.4",
+    "font-awesome": "fontawesome#^4.7.0",
+    "angular-ui-router": "^0.4.2",
+    "angular-resource": "^1.6.4"
   }
 }
