@@ -1,0 +1,23 @@
+{
+  "name": "data-visualization-project",
+  "description": "Developed as part of \"CSE 578 - Data Visualization\" project",
+  "main": "index.html",
+  "authors": [
+    "Arun Karthikeyan",
+    "Saumya Parikh",
+    "Utkarsh",
+    "Nickey"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "data",
+    "visualization"
+  ],
+  "homepage": "https://github.com/arun-karthikeyan/DataViz",
+  "private": true,
+  "dependencies": {
+    "angular": "^1.6.4",
+    "bootstrap": "v4.0.0-alpha.6",
+    "d3": "^4.7.4"
+  }
+}
