@@ -9,10 +9,10 @@ angular.module('datavizApp', ['ui.router', 'ngResource'])
         url: '/',
         views: {
           'header': {
-              templateUrl : 'views/header.html',
+              templateUrl : 'app/views/header.html',
           },
           'content': {
-              templateUrl : 'views/home.html',
+              templateUrl : 'app/views/home.html',
               controller  : 'IndexController'
           }
           // ,
@@ -27,7 +27,7 @@ angular.module('datavizApp', ['ui.router', 'ngResource'])
           url:'co2',
           views: {
               'content@': {
-                  templateUrl : 'views/co2emission.html',
+                  templateUrl : 'app/views/co2emission.html',
                   controller  : 'CO2Controller'
               }
           }
@@ -38,7 +38,7 @@ angular.module('datavizApp', ['ui.router', 'ngResource'])
           url:'combined',
           views: {
               'content@': {
-                  templateUrl : 'views/combined.html',
+                  templateUrl : 'app/views/combined.html',
                   controller  : 'CombinedController'
               }
           }
@@ -49,7 +49,7 @@ angular.module('datavizApp', ['ui.router', 'ngResource'])
           url:'disaster',
           views: {
               'content@': {
-                  templateUrl : 'views/disaster.html',
+                  templateUrl : 'app/views/disaster.html',
                   controller  : 'DisasterController'
               }
           }
@@ -60,7 +60,7 @@ angular.module('datavizApp', ['ui.router', 'ngResource'])
           url:'ice',
           views: {
               'content@': {
-                  templateUrl : 'views/iceextent.html',
+                  templateUrl : 'app/views/iceextent.html',
                   controller  : 'IceController'
               }
           }
@@ -71,7 +71,7 @@ angular.module('datavizApp', ['ui.router', 'ngResource'])
           url:'temperature',
           views: {
               'content@': {
-                  templateUrl : 'views/temperature.html',
+                  templateUrl : 'app/views/temperature.html',
                   controller  : 'TemperatureController'
               }
           }
@@ -82,7 +82,7 @@ angular.module('datavizApp', ['ui.router', 'ngResource'])
           url:'about',
           views: {
               'content@': {
-                  templateUrl : 'views/about.html',
+                  templateUrl : 'app/views/about.html',
                   controller  : 'AboutController'
               }
           }
