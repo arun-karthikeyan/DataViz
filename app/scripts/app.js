@@ -14,10 +14,11 @@ angular.module('datavizApp', ['ui.router', 'ngResource'])
           'content': {
               templateUrl : 'views/home.html',
               controller  : 'IndexController'
-          },
-          'footer': {
-              templateUrl : 'views/footer.html',
           }
+          // ,
+          // 'footer': {
+          //     templateUrl : 'views/footer.html',
+          // }
         }
       })
 
