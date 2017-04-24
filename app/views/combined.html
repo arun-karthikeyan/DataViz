@@ -1,5 +1,9 @@
 <style>
 
+body, html{
+	height: 100%;
+}
+
 .stroke {
   fill: none;
   stroke: #fff;
@@ -74,20 +78,34 @@ button {
 	font-size: 20px;
 }
 
+.countryProfile{
+  font-size: 20px;
+  fill: white;
+}
+
+#countryDetails{
+	top: 50%;
+}
+
+#legendArea{
+	position: relative;
+}
+
 #carbonLevels{
   font-size: 12px;
   fill: white;
+  position: relative;
 }
 .co2Heading{
 	position: relative;
 	left: 5px;
-	top: 22.85%;
+	top: 22.17%;
 	font-weight: bold;
 }
 .co2Value{
 	position: relative;
 	left: 5px;
-	top: 24.85%;
+	top: 24.17%;
 }
 .disastersHeading{
 	position: relative;
@@ -100,24 +118,18 @@ button {
 	left: 5px;
 	top: 37%;
 }
+.countryHeading{
+	position: relative;
+	left: 5px;
+	top: 45%;
+	font-weight: bold;	
+}
 
 #year {
 	color: white;
 	font-size: 25px;	
 }
 
-div.tooltip {	
-    position: absolute;			
-    text-align: center;			
-    width: 60px;					
-    height: 28px;					
-    padding: 2px;				
-    font: 12px sans-serif;		
-    background: lightsteelblue;	
-    border: 0px;		
-    border-radius: 8px;			
-    pointer-events: none;			
-}
 
 </style>
 <div class="container bg-inverse text-white">
@@ -127,27 +139,39 @@ div.tooltip {
 		</div>
 	</div>
 	<div class = "row row-header" style="text-align: center; padding: 5px 0px; margin: 10px 0px;">
-		<div class = "col-xs-12" id = "tempArea" style = "width: 70%">
-			<p style = "color:white;">Temperature</h2>
-				<h2><img src = "./app/images/legendTemp.jpg"></img></h2>
-			</p>
-			<div class = "row row-content">
-				<div id = "mapArea">
-				</div>
-				<div class = "slider">
-					<button type="button" id="start">Play</button>
-					<input type='range' min='1960' max='2012' step='1' value='1960' id='rangeSlider'/> 
-					<output name = "year" id = "year"> 1960 </output>
+		<div class = "col-xs-12" style="width: 70%"> 
+			<div class = "row row-header" style="text-align: center; padding: 5px 0px; margin: 10px 0px;">
+				<div class = "col-xs-12" id = "tempArea" style = "width: 100%">
+					<p style = "color:white;">Temperature</h2>
+						<h2><img src = "./app/images/legendTemp.jpg"></img></h2>
+					</p>
+					<div class = "row row-content">
+						<div id = "mapArea"></div>
+						<div class = "slider">
+							<button type="button" id="start">Play</button>
+							<input type='range' min='1960' max='2012' step='1' value='1960' id='rangeSlider'/> 
+							<output name = "year" id = "year"> 1960 </output>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class = "col-xs-12" id = "legendArea" style = "width: 15%">
-		</div>
-		<div class = "col-xs-12" id = "carbonLevels" style = "width: 15%">
-			<div class = "co2Heading">CARBON LEVELS</div>
-			<div class = "co2Value"> 59092691.68 </div>
-			<div class = "disastersHeading"> DISASTERS </div>
-			<div class = "disasterNo"> 6 </div>
+		<div class = "col-xs-12" style = "width: 30%">
+			<div class = "row row-header" style="text-align: center; padding: 5px 0px; margin: 10px 0px;">
+			</div>
+				<div class = "row row-content">
+				<div class = "countryProfile" style = "width:100%">
+					<div id = "countryDetails"> Country </div>
+				</div>
+					<div class = "col-xs-12" id = "legendArea" style = "width: 50%;">
+					</div>
+					<div class = "col-xs-12" id = "carbonLevels" style = "width: 50%">
+						<div class = "co2Heading">CARBON LEVELS</div>
+						<div class = "co2Value"> 59092691.68 </div>
+						<div class = "disastersHeading"> DISASTERS </div>
+						<div class = "disasterNo"> 6 </div>
+					</div>
+				</div>
 		</div>
 	</div>
 </div>
@@ -157,7 +181,7 @@ div.tooltip {
 		var areaDims = mappingArea.getBoundingClientRect();
 		var width = areaDims.width;
     		height = areaDims.height;
-		var projection, path, graticule, svg, svgCarbon, currentYear, startYear, endYear, countries, playing, numberOfDisasters, radialGradient, carbonValue;
+		var projection, path, graticule, svg, svgCarbon, currentYear, startYear, endYear, countries, playing, numberOfDisasters, radialGradient, carbonValue, countryValues;
 		var world, temperature, extremeTemp, droughts, globalCO2, floods, storms, tropicalCyclones, co2Measure;
 		playing = false;
 		startYear = 1960;
@@ -340,36 +364,6 @@ div.tooltip {
 					.attr("x", 30)
 					.attr("y", function(){return legendHeight/4 + 155;})
 					.text("Extreme Temperatures");
-
-			/*svgLegend.append("text")
-					.attr("x", 200)
-					.attr("y", function(){return legendHeight/4;})
-					.style("font-weight", "bold")
-					.text("CARBON LEVELS")
-
-			svgLegend.append("text")
-					.attr("cx", 200)
-					.attr("cy", function(){return legendHeight/4 + 30;})
-					.attr("r", 10)
-					.style("fill", "#d9d9d9");
-
-			svgLegend.append("circle")
-					.attr("cx", 200)
-					.attr("cy", function(){return legendHeight/4 + 60;})
-					.attr("r", 10)
-					.style("fill", "#969696");
-
-			svgLegend.append("circle")
-					.attr("cx", 200)
-					.attr("cy", function(){return legendHeight/4 + 90;})
-					.attr("r", 10)
-					.style("fill", "#252525");
-*/
-
-			/*svgLegend.append("text")
-			.attr("x", 830)
-			.attr("y", function(d, i){ return legendHeight/4 + (i*cellHeight) + (2*cellHeight) + 15; })
-			.text(function(d, i){ return tempDomain[i];});*/
 		}
 
 		function worldMap(error, a, b, c, d, e, f, g, h){
@@ -397,6 +391,7 @@ div.tooltip {
 		      return temperature['Country Code'] == country.id;
 		    });
 		    country.temperature = (temp[0] != undefined) ? temp[0][String(currentYear)] : null;
+		    country.name = (temp[0] != undefined) ? temp[0]['Country'] : null;
 
 		    //Tropical tropicalCyclones
 
@@ -475,12 +470,17 @@ div.tooltip {
 		    .data(countries)
 		    .transition()
 		    .style("fill", function(d){return colorsTemp(d.temperature)});
+
 		  svg.selectAll(".country")
-		  	.on('mouseover', function(){
+		  	.data(countries)
+		  	.on('mouseover', function(d){
 		  		d3.select(this).style('fill-opacity', 0.5);
+		  		d3.select("#countryDetails").text(function(){var details = d.name + ":\r\n" + parseFloat(Math.round(d.temperature * 1000) / 1000).toFixed(3); return details;});
+		  		//console.log(d.temperature);
 		  	})
 		  	.on('mouseout', function(){
-		  		d3.select(this).style('fill-opacity', 1)
+		  		d3.select(this).style('fill-opacity', 1);
+		  		d3.select("#countryDetails").text("");
 		  	});
 
 		  var carbonColor = colorsCO2(co2Measure[0]['Log10']);
