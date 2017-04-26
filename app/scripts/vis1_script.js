@@ -49,7 +49,7 @@ $(document).ready(function() {
 
 
 // Load the data.
-    d3.json("CO2_nations_data.json", function (country) {
+    d3.json("Data/CO2_nations_data.json", function (country) {
 
         // Create the SVG container and set the origin.
         var svg = d3.select("#chart").append("svg")
