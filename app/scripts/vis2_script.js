@@ -21,7 +21,7 @@ var x0 = d3.scaleBand().rangeRound([0, width-60]),
     z = d3.scaleOrdinal(d3.schemeCategory20);
 
 //Mapping the csv file to populate the column chart
-d3.csv("CO2_data.csv", function(d, i, columns) {
+d3.csv("Data/CO2_data.csv", function(d, i, columns) {
     for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
     return d;
 }, function(error, data) {
