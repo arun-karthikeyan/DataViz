@@ -735,12 +735,12 @@ d3.json("Data/Complete.json", function(error, global_complete) {
             .text("Type of Disaster");
 
       svg.append("text")
-           .attr("y", parseInt(+svg.node().getBoundingClientRect().height)-margin.bottom+20)
+           .attr("y", parseInt(+svg.node().getBoundingClientRect().height)-margin.bottom+15)
            .attr("x", (parseInt(+svg.node().getBoundingClientRect().width)/2)+margin.left)
            .attr("dy", "1em")
            .style("text-anchor", "middle")
            .attr("fill","#fff")
-           .text("Severity ->");
+           .text("Severity -->");
 
         if(year!=endYear){
           g.selectAll(".bar")
