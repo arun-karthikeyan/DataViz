@@ -151,8 +151,8 @@ text{
 
 #topdisasters .axis path,
 #topdisasters .axis line {
-  fill: none;
-  stroke: #D4D8DA;
+  fill: #fff;
+  stroke: #fff;
   stroke-width: 1px;
   shape-rendering: crispEdges;
 }
@@ -170,4 +170,13 @@ text{
   border: 1px solid #6F257F;
   padding: 14px;
   text-align: center;
+}
+
+#topdisasters .x-axis text, #topdisasters .y-axis text{
+  fill: #fff !important;
+  /*stroke: #fff !important;*/
+}
+
+#topdisasters .y-axis path, #topdisasters .x-axis path{
+  stroke: #fff !important;
 }

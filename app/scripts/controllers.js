@@ -506,8 +506,8 @@ d3.json("Data/Complete.json", function(error, global_complete) {
   function drawChart(year){
     var svg = d3.select("#topcountries").select("svg"),
         margin = {top: 20, right: 20, bottom: 30, left: 40},
-        width = +svg.attr("width") - margin.left - margin.right,
-        height = +svg.attr("height") - margin.top - margin.bottom - 150,
+        width = +svg.node().getBoundingClientRect().width - margin.left - margin.right,
+        height = +svg.node().getBoundingClientRect().height - margin.top - margin.bottom - 150,
         g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var x = d3.scaleBand()
@@ -691,8 +691,8 @@ d3.json("Data/Complete.json", function(error, global_complete) {
   function generateChart(year){
     var svg = d3.select("#topdisasters").select("svg"),
         margin = {top: 20, right: 20, bottom: 30, left: 80},
-        width = +svg.attr("width") - margin.left - margin.right - 50,
-        height = +svg.attr("height") - margin.top - margin.bottom;
+        width = +svg.node().getBoundingClientRect().width - margin.left - margin.right,
+        height = +svg.node().getBoundingClientRect().height - margin.top - margin.bottom;
 
     var tooltip = d3.select("#topdisasters").append("div").attr("class", "toolTip");
 
@@ -717,12 +717,12 @@ d3.json("Data/Complete.json", function(error, global_complete) {
         y.domain(data.map(function(d) { return d.disaster; })).padding(0.1);
 
         g.append("g")
-            .attr("class", "x axis")
+            .attr("class", "x-axis")
            	.attr("transform", "translate(50," + height + ")")
           	.call(d3.axisBottom(x).ticks(5).tickFormat(function(d) { return parseInt(d); }).tickSizeInner([-height]));
 
         g.append("g")
-            .attr("class", "y axis")
+            .attr("class", "y-axis")
             .attr("transform", "translate(50, 0)")
             .call(d3.axisLeft(y))
 
@@ -731,16 +731,16 @@ d3.json("Data/Complete.json", function(error, global_complete) {
             .attr("x", margin.left)
             .attr("dy", "1em")
             .style("text-anchor", "middle")
+            .attr("fill","#fff")
             .text("Type of Disaster");
 
       svg.append("text")
-           .attr("y", parseInt(svg.attr("height"))+margin.top)
-           .attr("x", svg.attr("width")/2)
+           .attr("y", parseInt(+svg.node().getBoundingClientRect().height)-margin.bottom+20)
+           .attr("x", (parseInt(+svg.node().getBoundingClientRect().width)/2)+margin.left)
            .attr("dy", "1em")
-           .attr("fill","none")
-           .style("stroke","#000")
            .style("text-anchor", "middle")
-           .text("Severity");
+           .attr("fill","#fff")
+           .text("Severity ->");
 
         if(year!=endYear){
           g.selectAll(".bar")
