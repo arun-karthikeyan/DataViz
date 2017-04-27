@@ -362,7 +362,110 @@ d3.csv("Data/CO2_data.csv", function(d, i, columns) {
 
 .controller('CombinedController', ['$scope', function($scope) {
   //Combined controller code goes here
-  
+  function combinedInit(){
+    var columns;
+    // Chart columns.
+var margin = {top: 50, right: 100, bottom: 10, left: 100},
+  width = 960 - margin.left - margin.right,
+  height = 500 - margin.top - margin.bottom;
+
+// X-axis and y-axis scales.
+var x = d3.scaleBand()
+  .rangeRound([0, width])
+  .padding(0.1),
+  y = {};
+
+//Creating the variables like line, axis, background, foreground.
+var line = d3.line(),
+  axis = d3.axisLeft(),
+  background,
+  foreground;
+
+  //Creating tooltip for each line
+  var red_tooltip = d3.select("#combined_svg")
+    .append("div")
+    .style("position", "absolute")
+    .style("z-index", "10")
+    .style("visibility", "hidden")
+    .attr("class","tooltip");
+
+//Create svg using the variables and applying background
+var svg = d3.select("#combined_svg").append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+//Mapping json and populating data
+d3.json("Data/Complete.json", function(error, global_complete) {
+
+  if (error) throw error;
+
+  // Extract the list of columns and create a scale for each.
+
+  x.domain(columns = d3.keys(global_complete[0]).filter(function(d) {
+  return (y[d] = d3.scaleLinear()
+    .domain(d3.extent(global_complete, function(p) { return +p[d]; }))
+    .range([height, 0]));
+  }));
+
+  // Add grey background lines for context.
+        var grey_background = svg.append("g")
+    .attr("class", "background")
+  .selectAll("path")
+    .data(global_complete)
+  .enter().append("path")
+    .attr("d", pathFunction);
+
+  // Add blue foreground lines for focus.
+  var blue_foreground = svg.append("g")
+		  .attr("class", "foreground")
+		.selectAll("path")
+		  .data(global_complete)
+		.enter().append("path")
+		  .attr("d", pathFunction)      //AB Segler's block
+		  .on("mouseover", function(n){
+			d3.select(this).transition().duration(100)
+			  .style("stroke" , "#F00")
+                .style('stroke-width', '2');
+			red_tooltip.text(n.year).style("visibility", "visible");
+		  return red_tooltip;})
+		  .on("mouseout", function(d){
+			d3.select(this).transition().duration(100)
+			  .style("stroke", "steelblue")
+                .style('stroke-width', 'initial');
+		return red_tooltip.style("visibility", "hidden");
+		});
+
+  // Add a group element for each dimension.
+  var g = svg.selectAll(".dimension")
+    .data(columns)
+  .enter().append("g")
+    .attr("class", "dimension")
+    .attr("transform", function(d) { return "translate(" + x(d) + ")"; });
+
+
+  // Add an axis and title.
+  g.append("g")
+    .attr("class", "axis")
+    .each(function(d) { d3.select(this).call(axis.scale(y[d])); });
+
+  g.append("text")
+    .style("text-anchor", "middle")
+    .attr("y", -9)
+    .text(function(d) {return d;});
+
+});
+
+// Returns the path for a given data point.
+  function pathFunction(d) {
+    // console.log(columns);
+    return line(columns.map(function(p) { return [x(p), y[p](d[p])]; }));
+  }
+  }
+  combinedInit();
 }])
 
 .controller('DisasterController', ['$scope', function($scope) {

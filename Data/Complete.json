@@ -1,0 +1,282 @@
+[
+ {
+   "year": 1979,
+   "temp": 0.086,
+   "carbon": 130190818.9,
+   "northice": 12.305,
+   "southice": 11.719,
+   "disasterfreq": 37
+ },
+ {
+   "year": 1980,
+   "temp": 0.335,
+   "carbon": 129170160.2,
+   "northice": 12.334,
+   "southice": 11.236,
+   "disasterfreq": 46
+ },
+ {
+   "year": 1981,
+   "temp": 0.513,
+   "carbon": 126304531.8,
+   "northice": 12.135,
+   "southice": 11.416,
+   "disasterfreq": 50
+ },
+ {
+   "year": 1982,
+   "temp": -0.009,
+   "carbon": 127304534.1,
+   "northice": 12.439,
+   "southice": 11.658,
+   "disasterfreq": 45
+ },
+ {
+   "year": 1983,
+   "temp": 0.382,
+   "carbon": 129097332.5,
+   "northice": 12.335,
+   "southice": 11.37,
+   "disasterfreq": 73
+ },
+ {
+   "year": 1984,
+   "temp": 0.044,
+   "carbon": 134100648.1,
+   "northice": 11.913,
+   "southice": 11.45,
+   "disasterfreq": 46
+ },
+ {
+   "year": 1985,
+   "temp": 0.009,
+   "carbon": 139075550.2,
+   "northice": 11.986,
+   "southice": 11.634,
+   "disasterfreq": 48
+ },
+ {
+   "year": 1986,
+   "temp": 0.186,
+   "carbon": 142654520.7,
+   "northice": 12.208,
+   "southice": 11.071,
+   "disasterfreq": 45
+ },
+ {
+   "year": 1987,
+   "temp": 0.349,
+   "carbon": 148356814.9,
+   "northice": 11.397,
+   "southice": 12.901,
+   "disasterfreq": 62
+ },
+ {
+   "year": 1988,
+   "temp": 0.55,
+   "carbon": 154974678.6,
+   "northice": 12.093,
+   "southice": 11.685,
+   "disasterfreq": 55
+ },
+ {
+   "year": 1989,
+   "temp": 0.271,
+   "carbon": 158868794.4,
+   "northice": 11.967,
+   "southice": 11.425,
+   "disasterfreq": 51
+ },
+ {
+   "year": 1990,
+   "temp": 0.581,
+   "carbon": 157655755.2,
+   "northice": 11.693,
+   "southice": 11.049,
+   "disasterfreq": 81
+ },
+ {
+   "year": 1991,
+   "temp": 0.526,
+   "carbon": 165244621.2,
+   "northice": 11.749,
+   "southice": 11.544,
+   "disasterfreq": 63
+ },
+ {
+   "year": 1992,
+   "temp": 0.176,
+   "carbon": 187781236.2,
+   "northice": 12.11,
+   "southice": 11.399,
+   "disasterfreq": 55
+ },
+ {
+   "year": 1993,
+   "temp": 0.212,
+   "carbon": 188820502.9,
+   "northice": 11.923,
+   "southice": 11.42,
+   "disasterfreq": 73
+ },
+ {
+   "year": 1994,
+   "temp": 0.386,
+   "carbon": 189000957.4,
+   "northice": 12.011,
+   "southice": 11.77,
+   "disasterfreq": 68
+ },
+ {
+   "year": 1995,
+   "temp": 0.696,
+   "carbon": 193479165.8,
+   "northice": 11.415,
+   "southice": 11.795,
+   "disasterfreq": 73
+ },
+ {
+   "year": 1996,
+   "temp": 0.386,
+   "carbon": 198771116.2,
+   "northice": 11.84,
+   "southice": 11.769,
+   "disasterfreq": 59
+ },
+ {
+   "year": 1997,
+   "temp": 0.548,
+   "carbon": 199097729.8,
+   "northice": 11.667,
+   "southice": 11.39,
+   "disasterfreq": 73
+ },
+ {
+   "year": 1998,
+   "temp": 0.873,
+   "carbon": 198185731.7,
+   "northice": 11.757,
+   "southice": 11.74,
+   "disasterfreq": 84
+ },
+ {
+   "year": 1999,
+   "temp": 0.635,
+   "carbon": 200750517.9,
+   "northice": 11.691,
+   "southice": 11.76,
+   "disasterfreq": 100
+ },
+ {
+   "year": 2000,
+   "temp": 0.554,
+   "carbon": 206124327.5,
+   "northice": 11.508,
+   "southice": 11.75,
+   "disasterfreq": 110
+ },
+ {
+   "year": 2001,
+   "temp": 0.763,
+   "carbon": 208940234.5,
+   "northice": 11.6,
+   "southice": 11.672,
+   "disasterfreq": 99
+ },
+ {
+   "year": 2002,
+   "temp": 0.921,
+   "carbon": 212455249.6,
+   "northice": 11.36,
+   "southice": 11.221,
+   "disasterfreq": 118
+ },
+ {
+   "year": 2003,
+   "temp": 0.88,
+   "carbon": 227121105.2,
+   "northice": 11.397,
+   "southice": 11.969,
+   "disasterfreq": 89
+ },
+ {
+   "year": 2004,
+   "temp": 0.678,
+   "carbon": 240341851.2,
+   "northice": 11.24,
+   "southice": 11.961,
+   "disasterfreq": 95
+ },
+ {
+   "year": 2005,
+   "temp": 1.059,
+   "carbon": 248756184.9,
+   "northice": 10.9,
+   "southice": 11.694,
+   "disasterfreq": 129
+ },
+ {
+   "year": 2006,
+   "temp": 0.882,
+   "carbon": 259555193.3,
+   "northice": 10.77,
+   "southice": 11.461,
+   "disasterfreq": 72
+ },
+ {
+   "year": 2007,
+   "temp": 1.084,
+   "carbon": 267381908.8,
+   "northice": 10.47,
+   "southice": 11.687,
+   "disasterfreq": 103
+ },
+ {
+   "year": 2008,
+   "temp": 0.78,
+   "carbon": 275641508.4,
+   "northice": 10.978,
+   "southice": 12.239,
+   "disasterfreq": 77
+ },
+ {
+   "year": 2009,
+   "temp": 0.851,
+   "carbon": 274830781,
+   "northice": 10.93,
+   "southice": 12.0485,
+   "disasterfreq": 82
+ },
+ {
+   "year": 2010,
+   "temp": 1.051,
+   "carbon": 294742279.6,
+   "northice": 10.71,
+   "southice": 12.107,
+   "disasterfreq": 102
+ },
+ {
+   "year": 2011,
+   "temp": 0.869,
+   "carbon": 309539075.3,
+   "northice": 10.48,
+   "southice": 11.5,
+   "disasterfreq": 75
+ },
+ {
+   "year": 2012,
+   "temp": 0.853,
+   "carbon": 316798404.3,
+   "northice": 10.4,
+   "southice": 12,
+   "disasterfreq": 94
+ },
+ {
+   "year": 2013,
+   "temp": 0.952,
+   "carbon": 318047440.2,
+   "northice": 10.89,
+   "southice": 12.523,
+   "disasterfreq": 68
+ }
+]
