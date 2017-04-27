@@ -1345,6 +1345,11 @@ function northPole(){
           .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+            // Define the div for the tooltip
+            var div = d3.select("#polarTemperature").append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
+
 
         var xScale = d3.scaleTime().range([0, width]);
         var yScale = d3.scaleLinear().range([height, 0]);
@@ -1357,7 +1362,7 @@ function northPole(){
 
 
         var line = d3.line()
-          .curve(d3.curveBasis)
+          //.curve(d3.curveBasis)
           .x(function(d) { return xScale(d.date); })
           .y(function(d) { return yScale(d.temp); });
 
@@ -1431,6 +1436,54 @@ function northPole(){
               return "cyan";
             }
            });
+
+           // Add the scatterplot
+          svg.selectAll("dot")
+              .data(data)
+          .enter().append("circle")
+              .attr("r", 4)
+              .attr("cx", function(d) { return xScale(d.date); })
+              .attr("cy", function(d) { return yScale(d.north); })
+              .attr("fill", "orange")
+              .attr("stroke", "#fff")
+              .on("mouseover", function(d) {
+                var format = d3.timeFormat("%Y");
+                console.log(format(d.date));
+                  div.transition()
+                      .duration(200)
+                      .style("opacity", .9);
+                  div.html("Year: " + format(d.date) + "<br/>"  + "Temperature Anomaly: " + d.north)
+                      .style("left", (d3.event.pageX - 40) + "px")
+                      .style("top", ((d3.event.pageY) - 450) + "px");
+                  })
+              .on("mouseout", function(d) {
+                  div.transition()
+                      .duration(500)
+                      .style("opacity", 0);
+              });
+              svg.selectAll("dot")
+                  .data(data)
+              .enter().append("circle")
+                  .attr("r", 4)
+                  .attr("cx", function(d) { return xScale(d.date); })
+                  .attr("cy", function(d) { return yScale(d.south); })
+                  .attr("fill", "cyan")
+                  .attr("stroke", "#fff")
+                  .on("mouseover", function(d) {
+                    var format = d3.timeFormat("%Y");
+                    console.log(format(d.date));
+                      div.transition()
+                          .duration(200)
+                          .style("opacity", .9);
+                      div.html("Year: " + format(d.date) + "<br/>"  + "Temperature Anomaly: " + d.south)
+                          .style("left", (d3.event.pageX - 40) + "px")
+                          .style("top", ((d3.event.pageY) - 450) + "px");
+                      })
+                  .on("mouseout", function(d) {
+                      div.transition()
+                          .duration(500)
+                          .style("opacity", 0);
+                  });
     });
 }
 
