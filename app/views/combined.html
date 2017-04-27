@@ -143,7 +143,7 @@ button {
 			<div class = "row row-header" style="text-align: center; padding: 5px 0px; margin: 10px 0px;">
 				<div class = "col-xs-12" id = "tempArea" style = "width: 100%">
 					<p style = "color:white;">Temperature</h2>
-						<h2><img src = "./app/images/legendTemp.jpg"></img></h2>
+						<h2><img src = "app/images/legendTemp.JPG" class = "img-fluid"></img></h2>
 					</p>
 					<div class = "row row-content">
 						<div id = "mapArea"></div>
@@ -161,7 +161,8 @@ button {
 			</div>
 				<div class = "row row-content">
 				<div class = "countryProfile" style = "width:100%">
-					<div id = "countryDetails"> Country </div>
+					<h2> Temperature Anomaly </h2>
+					<div id = "countryDetails"> Country</div>
 				</div>
 					<div class = "col-xs-12" id = "legendArea" style = "width: 50%;">
 					</div>
@@ -480,7 +481,7 @@ button {
 		  	})
 		  	.on('mouseout', function(){
 		  		d3.select(this).style('fill-opacity', 1);
-		  		d3.select("#countryDetails").text("");
+		  		d3.select("#countryDetails").text("Country");
 		  	});
 
 		  var carbonColor = colorsCO2(co2Measure[0]['Log10']);
