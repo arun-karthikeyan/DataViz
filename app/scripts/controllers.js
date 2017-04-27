@@ -1316,10 +1316,12 @@ function northPole(){
            .attr("cy", function(d) { return yScale(d.globalTemp); })
            .attr("fill", "#fff")
            .on("mouseover", function(d) {
+             var format = d3.timeFormat("%Y");
+             console.log(format(d.date));
                div.transition()
                    .duration(200)
                    .style("opacity", .9);
-               div.html(d.date + "<br/>"  + d.globalTemp)
+               div.html("Year: " + format(d.date) + "<br/>"  + "Temperature Anomaly: " + d.globalTemp)
                    .style("left", (d3.event.pageX - 40) + "px")
                    .style("top", ((d3.event.pageY) - 450) + "px");
                })
