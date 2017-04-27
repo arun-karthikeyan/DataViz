@@ -500,7 +500,7 @@ d3.json("Data/Complete.json", function(error, global_complete) {
 .controller('DisasterController', ['$scope', function($scope) {
   //Disaster controller code goes here
   var startYear = 1960;
-  var endYear = 1963;
+  var endYear = 2016;
   function drawChart(year){
     var svg = d3.select("#topcountries").select("svg"),
         margin = {top: 20, right: 20, bottom: 30, left: 40},
@@ -798,6 +798,12 @@ d3.json("Data/Complete.json", function(error, global_complete) {
       .domain(d3.ticks(maxScore, minScore, 5))
       .range(['#bd0026', '#f03b20', '#fd8d3c', '#fecc5c','#ffffb2']);
 
+      var myTransition = d3.transition()
+                .duration(2000)
+                .ease(d3.easeLinear)
+                .on("start", function(d){ console.log("transiton start") })
+                .on("end", function(d){ console.log("transiton end") });
+
     var projection = d3.geoWinkel3()
         .scale(120)
         .translate([width/3, height / 3])
@@ -808,7 +814,7 @@ d3.json("Data/Complete.json", function(error, global_complete) {
 
     var graticule = d3.geoGraticule();
 
-    var svg = d3.select("#disasterchoropleth").append("svg")
+    var svg = d3.select("#disasterchoropleth").select("svg")
         .attr("width", width)
         .attr("height", height);
 
@@ -835,7 +841,7 @@ d3.json("Data/Complete.json", function(error, global_complete) {
       var countries = topojson.feature(world, world.objects.countries).features;
       var startYear = 1960;
       var endYear = 2012;
-      var currentYear = 1987;
+      var currentYear = 1960;
       var playing = false;
 
       function update(){
@@ -861,7 +867,7 @@ d3.json("Data/Complete.json", function(error, global_complete) {
 
         svg.selectAll(".country")
           .data(countries)
-          .transition()
+          .transition(myTransition)
           .style("fill", function(d){return colorsScore(d.disasterScore)});
       } // end of update
 
@@ -906,19 +912,16 @@ d3.json("Data/Complete.json", function(error, global_complete) {
               timer = setInterval(function(){   // set a JS interval
                 if(currentYear < endYear) {
                     currentYear +=1;  // increment the current attribute counter
-                } else {
-                    currentYear = startYear;  // or reset it to zero
                 }
-
-                // d3.select("#disasterchoropleth").selectAll("g")
-                //   .remove();
-
+                // else {
+                //     currentYear = startYear;  // or reset it to zero
+                // }
 
                 addLegend();
                 update();  // update the representation of the map
-                d3.select("#disasterchoropleth").select('#year').html(currentYear);
+                d3.select("#disasterchoroplethwrapper").select('#year').html(currentYear);
 
-              }, 500);
+              }, 2000);
 
               d3.select(this).html('stop');  // change the button label to stop
               playing = true;   // change the status of the animation
@@ -934,8 +937,7 @@ d3.json("Data/Complete.json", function(error, global_complete) {
     d3.select(self.frameElement).style("height", height + "px");
   }
 
-  drawChart(startYear);
-  generateChart(startYear);
+
   drawChoropleth(startYear);
 
 }])
@@ -1303,7 +1305,7 @@ function northPole(){
         .attr("d", function(d) {
         return line(d.values);
         })
-        .style("stroke", function(d) { return color(d.name); });
+        .style("stroke", function(d) { return "yellow"; });
 
         // Add the scatterplot
        svg.selectAll("dot")
@@ -1420,7 +1422,13 @@ function northPole(){
           .attr("d", function(d) {
             return line(d.values);
           })
-          .style("stroke", function(d) { return color(d.name); });
+          .style("stroke", function(d) {
+            if(d.name==="north"){
+              return "orange";
+            }else{
+              return "cyan";
+            }
+           });
     });
 }
 

@@ -142,7 +142,7 @@ button {
 		<div class = "col-xs-12" style="width: 70%">
 			<div class = "row row-header" style="text-align: center; padding: 5px 0px; margin: 10px 0px;">
 				<div class = "col-xs-12" id = "tempArea" style = "width: 100%">
-					<p style = "color:white;">Temperature</h2>
+					<p style = "color: white;">Temperature</h2>
 						<h2><img src = "app/images/legendTemp.JPG" class = "img-fluid"></img></h2>
 					</p>
 					<div class = "row row-content" style = "border-width: 0px;">
@@ -178,7 +178,7 @@ button {
 	<div class="row row-header" id="combined_svg" style="margin-bottom: 100px;">
 	</div>
 </div>
-<script>
+<script type="application/javascript">
 var mappingArea = document.getElementById("mapArea");
   var areaDims = mappingArea.getBoundingClientRect();
   var width = areaDims.width;
@@ -258,7 +258,7 @@ var mappingArea = document.getElementById("mapArea");
         .attr("class", "fill")
         .attr("xlink:href", "#sphere");
 
-    var div = d3.sel	ect("body").append("div")
+    var div = d3.select("body").append("div")
             .attr("class", "tooltip")
             .style("opacity", 0);
 
