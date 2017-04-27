@@ -181,6 +181,37 @@ text{
   stroke: #fff !important;
 }
 
+#disasterchoropleth .stroke {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 3px;
+}
+
+#disasterchoropleth .fill {
+  fill: none;
+}
+
+#disasterchoropleth .graticule {
+  fill: none;
+  stroke: none;
+  stroke-width: .5px;
+  stroke-opacity: 1;
+}
+
+#disasterchoropleth .land {
+  fill: none;
+}
+
+#disasterchoropleth .boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1px;
+}
+#disasterchoropleth .legend {
+  font-size: 12px;
+  fill: white;
+}
+
 /** Ice Extent Styles **/
 #northPole .y-iceAxis text, #northPole .x-iceAxis text, #southPole .y-iceAxis text, #southPole .x-iceAxis text {
   fill: #fff !important;

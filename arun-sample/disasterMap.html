@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  background: #000;
+}
+
+.stroke {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 3px;
+}
+
+.fill {
+  fill: none;
+}
+
+.graticule {
+  fill: none;
+  stroke: none;
+  stroke-width: .5px;
+  stroke-opacity: 1;
+}
+
+.land {
+  fill: none;
+}
+
+.boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1px;
+}
+.legend {
+  font-size: 12px;
+  fill: white;
+}
+</style>
+
+<head>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+<script src="https://d3js.org/topojson.v1.min.js"></script>
+<script src="http://d3js.org/queue.v1.min.js"></script>
+</head>
+
+<body>
+<div id  = "wrapper">
+  <button id = "play"> Play </button>
+  <span id = "year" style = "color: white;"> 1987 </span>
+</div>
+
+<script>
+
+  var width = 960,
+  height = 580;
+  var minScore = 0,
+      maxScore = 19.6146;
+  var colorsScore = d3.scaleLinear()
+    .domain(d3.ticks(maxScore, minScore, 5))
+    .range(['#bd0026', '#f03b20', '#fd8d3c', '#fecc5c','#ffffb2']);
+
+  var projection = d3.geoWinkel3()
+      .scale(120)
+      .translate([width/3, height / 3])
+      .precision(.1);
+
+  var path = d3.geoPath()
+      .projection(projection);
+
+  var graticule = d3.geoGraticule();
+
+  var svg = d3.select("body").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+  svg.append("defs").append("path")
+    .datum({type: "Sphere"})
+    .attr("id", "sphere")
+    .attr("d", path);
+
+  svg.append("use")
+    .attr("class", "stroke")
+    .attr("xlink:href", "#sphere");
+
+  svg.append("use")
+    .attr("class", "fill")
+    .attr("xlink:href", "#sphere");
+
+  queue()
+    .defer(d3.json, "world110m.json")
+    .defer(d3.json, "newDisasters")
+  .await(worldMap);
+
+  function worldMap(error, world, disasters){
+    var countries = topojson.feature(world, world.objects.countries).features;
+    var startYear = 1960;
+    var endYear = 2012;
+    var currentYear = 1987;
+    var playing = false;
+
+    function update(){
+
+      countries = topojson.feature(world, world.objects.countries).features;
+      //console.log(disasters);
+      svg.selectAll(".country")
+        .data(countries)
+        .enter().insert("path", ".graticule")
+        .attr("class", "country")
+        .attr("d", path);
+
+      countries.forEach(function(country){
+
+
+      var disaster = disasters.filter(function(disaster){
+        return disaster['CountryCode'] == country.id;
+      });
+        country.disasterScore = (disaster[0] != undefined) ? disaster[0][currentYear] : null;
+      });
+      console.log(countries[0].disasterScore);
+      svg.insert("path", ".graticule")
+        .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
+        .attr("class", "boundary")
+        .attr("d", path);
+
+      svg.selectAll(".country")
+        .data(countries)
+        .transition()
+        .style("fill", function(d){return colorsScore(d.disasterScore)});
+    }
+    function addLegend(){
+      var scoreDomain = [20];
+      scoreDomain = scoreDomain.concat(colorsScore.domain());
+      var legend = svg.selectAll("g.legend")
+                    .data(colorsScore.domain())
+                    .enter().append('g')
+                    .attr("class", "legend");
+      var legendWidth = 20, legendHeight = 20;
+      legend.append("rect")
+        .attr("x", 800)
+        .attr("y", function(d, i){return height/4 + (i*legendHeight) + (2*legendHeight);})
+        .attr("width", legendWidth)
+        .attr("height", legendHeight)
+        .style("fill", function(d, i){ return colorsScore(d); })
+        .style("opacity", 0.8);
+      legend.append("text")
+        .attr("x", 830)
+        .attr("y", function(d, i){ return height/4 + (i*legendHeight) + (2*legendHeight) + 15; })
+        .text(function(d, i){ return scoreDomain[i+1] + " - " + scoreDomain[i];});
+      legend.append("text")
+        .attr("x", 830)
+        .attr("y", function(d){return height/4 + 30;})
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("text-decoration", "underline")
+        .text("Severity Scale");
+    }
+      addLegend();
+      update();
+    function animate(){
+      var timer;  // create timer object
+      d3.select('#play')
+        .on('click', function() {  // when user clicks the play button
+          if(playing == false) {  // if the map is currently playing
+            timer = setInterval(function(){   // set a JS interval
+              if(currentYear < endYear) {
+                  currentYear +=1;  // increment the current attribute counter
+              } else {
+                  currentYear = startYear;  // or reset it to zero
+              }
+              d3.selectAll("g")
+                .transition()
+                .remove();
+              //create();
+              //d3.insert("body");
+              addLegend();
+              update();  // update the representation of the map
+              d3.select('#year').html(currentYear);
+              //d3.select('#disasters').html(numberOfDisasters);// update the clock
+            }, 500);
+
+            d3.select(this).html('stop');  // change the button label to stop
+            playing = true;   // change the status of the animation
+          } else {    // else if is currently playing
+            clearInterval(timer);   // stop the animation by clearing the interval
+            d3.select(this).html('play');   // change the button label to play
+            playing = false;   // change the status again
+          }
+      });
+    }
+    animate();
+  }
+  d3.select(self.frameElement).style("height", height + "px");
+</script>
