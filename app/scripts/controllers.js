@@ -937,7 +937,8 @@ d3.json("Data/Complete.json", function(error, global_complete) {
     d3.select(self.frameElement).style("height", height + "px");
   }
 
-
+  drawChart(startYear);
+  generateChart(startYear);
   drawChoropleth(startYear);
 
 }])
