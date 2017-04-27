@@ -62,7 +62,6 @@ angular.module('datavizApp')
             var svg = d3.select("#chart").append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
-                .style("background", "#000000")
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -279,7 +278,6 @@ var margin = {top: 20, right: 20, bottom: 30, left: 40},
 
 //Creating the svg and applying styling and giving attributes
 var svg = d3.select("svg")
-    .style("background", "#000000")
     .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
