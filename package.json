@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/arun-karthikeyan/DataViz/issues"
   },
-  "homepage": "https://github.com/arun-karthikeyan/DataViz#readme"
+  "homepage": "https://github.com/arun-karthikeyan/DataViz#readme",
+  "dependencies": {
+    "d3-geo-projection": "^2.1.0"
+  }
 }

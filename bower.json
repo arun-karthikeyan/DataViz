@@ -24,7 +24,6 @@
     "angular-resource": "^1.6.4",
     "jquery-ui": "^1.12.1",
     "d3-queue": "^3.0.5",
-    "topojson": "^3.0.0",
-    "d3-geo-projection": "^0.2.16"
+    "topojson": "^3.0.0"
   }
 }

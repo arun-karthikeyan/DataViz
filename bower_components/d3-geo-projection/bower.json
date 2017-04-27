@@ -1,7 +1,0 @@
-{
-  "name": "d3-geo-projection",
-  "description": "Extended geographic projections for D3.",
-  "main": "d3.geo.projection.js",
-  "license": "BSD-3-Clause",
-  "ignore": []
-}
