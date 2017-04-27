@@ -914,7 +914,7 @@ function northPole(){
         .attr("y",-40)
         .attr("dy",".71em")
         .style("text-anchor","end")
-        .attr("fill", "#000")
+        .attr("fill", "#fff")
         .text("Temperature");
 
     var allMonths = svg.selectAll(".eachMonth")
