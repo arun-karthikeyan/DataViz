@@ -886,7 +886,7 @@ d3.json("Data/Complete.json", function(error, global_complete) {
           .attr("x", 830)
           .attr("y", function(d, i){ return height/4 + (i*legendHeight) + (2*legendHeight) + 15; })
           .text(function(d, i){ return scoreDomain[i+1] + " - " + scoreDomain[i];});
-        
+
         legend.append("text")
           .attr("x", 830)
           .attr("y", function(d){return height/4 + 30;})
@@ -1075,6 +1075,7 @@ function northPole(){
         return line(d.values);
       })
       .style("stroke", function(d) { return colorScale(d.year); });
+
     });
 }
     function southPole(){
@@ -1227,6 +1228,10 @@ function northPole(){
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+        // Define the div for the tooltip
+        var div = d3.select("#globalTemperature").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
 
         var xScale = d3.scaleTime().range([0, width]);
         var yScale = d3.scaleLinear().range([height, 0]);
@@ -1237,7 +1242,7 @@ function northPole(){
 
 
         var line = d3.line()
-        .curve(d3.curveBasis)
+        //.curve(d3.curveBasis)
         .x(function(d) { return xScale(d.date); })
         .y(function(d) { return yScale(d.temp); });
 
@@ -1299,6 +1304,28 @@ function northPole(){
         return line(d.values);
         })
         .style("stroke", function(d) { return color(d.name); });
+
+        // Add the scatterplot
+       svg.selectAll("dot")
+           .data(data)
+       .enter().append("circle")
+           .attr("r", 4)
+           .attr("cx", function(d) { return xScale(d.date); })
+           .attr("cy", function(d) { return yScale(d.globalTemp); })
+           .attr("fill", "#fff")
+           .on("mouseover", function(d) {
+               div.transition()
+                   .duration(200)
+                   .style("opacity", .9);
+               div.html(d.date + "<br/>"  + d.globalTemp)
+                   .style("left", (d3.event.pageX - 40) + "px")
+                   .style("top", ((d3.event.pageY) - 450) + "px");
+               })
+           .on("mouseout", function(d) {
+               div.transition()
+                   .duration(500)
+                   .style("opacity", 0);
+           });
 
     });
     }

@@ -229,6 +229,18 @@ text{
   stroke-width: 1.5px;
 }
 
+#northPole .tooltip {
+  background-color: white;
+  color: #000;
+  margin: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 10px;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+  opacity: 1;
+}
 /** Temperature Styles **/
 #globalTemperature .y-tempAxis text, #globalTemperature .x-tempAxis text, #polarTemperature .y-tempAxis text, #polarTemperature .x-tempAxis text {
   fill: #fff !important;
@@ -244,4 +256,17 @@ text{
   fill: none;
   stroke: steelblue;
   stroke-width: 1.5px;
+}
+
+#globalTemperature div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 60px;
+    height: 28px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: white;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
 }
