@@ -827,7 +827,7 @@ function northPole(){
       .y(function(d) { return yScale(d.temp); });
 
 
-      
+
     var focus = svg.append("g")
                 .attr("class", "focus")
                 .style("display","none");
@@ -875,7 +875,7 @@ function northPole(){
         2016: +d['2016']
 
       };
-    }, 
+    },
     function (error, data){
     var x = d3.keys(data[0]).filter(function(key) { return key !== "month"; });
     var i;
@@ -923,7 +923,7 @@ function northPole(){
       .attr("class","line")
       .attr("id",function(d,i){ return "id" + i; })
       .attr("d", function(d) {
-        return line(d.values); 
+        return line(d.values);
       })
       .style("stroke", function(d) { return color(d.year); });
     });
@@ -956,7 +956,7 @@ function northPole(){
       .y(function(d) { return yScale(d.temp); });
 
 
-      
+
     var focus = svg.append("g")
                 .attr("class", "focus")
                 .style("display","none");
@@ -1004,7 +1004,7 @@ function northPole(){
         2016: +d['2016']
 
       };
-    }, 
+    },
     function (error, data){
     var x = d3.keys(data[0]).filter(function(key) { return key !== "month"; });
     var i;
@@ -1052,10 +1052,10 @@ function northPole(){
       .attr("class","line")
       .attr("id",function(d,i){ return "id" + i; })
       .attr("d", function(d) {
-        return line(d.values); 
+        return line(d.values);
       })
       .style("stroke", function(d) { return color(d.year); });
-    });       
+    });
     }
     northPole();
     southPole();
@@ -1093,7 +1093,7 @@ function northPole(){
         date: new Date(d.date, 0),
         globalTemp: +d.Global
         };
-        }, 
+        },
         function (error, data){
         data.sort(function(a, b){
         return a.date - b.date;
@@ -1143,7 +1143,7 @@ function northPole(){
         .attr("class","line")
         .attr("id",function(d,i){ return "id" + i; })
         .attr("d", function(d) {
-        return line(d.values); 
+        return line(d.values);
         })
         .style("stroke", function(d) { return color(d.name); });
 
@@ -1178,7 +1178,7 @@ function northPole(){
           .y(function(d) { return yScale(d.temp); });
 
 
-          
+
         var focus = svg.append("g")
                     .attr("class", "focus")
                     .style("display","none");
@@ -1189,7 +1189,7 @@ function northPole(){
             north: +d.North,
             south: +d.South
           };
-        }, 
+        },
         function (error, data){
           data.sort(function(a, b){
             return a.date - b.date;
@@ -1238,7 +1238,7 @@ function northPole(){
           .attr("class","line")
           .attr("id",function(d,i){ return "id" + i; })
           .attr("d", function(d) {
-            return line(d.values); 
+            return line(d.values);
           })
           .style("stroke", function(d) { return color(d.name); });
     });
