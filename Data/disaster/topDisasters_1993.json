@@ -1,0 +1,8 @@
+[
+{"disaster": "tropical cyclone", "severity": 232.20539017498942},
+{"disaster": "drought", "severity": 70.69428383459442},
+{"disaster": "heat wave", "severity": 18.785496176025926},
+{"disaster": "cold wave", "severity": 5.707110264748875},
+{"disaster": "flood", "severity": 216.26876366190368},
+{"disaster": "storms", "severity": 145.60836940289494}
+]

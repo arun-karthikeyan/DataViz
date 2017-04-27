@@ -6,28 +6,34 @@
 }
 
 </style>
-<svg width="960" height="500"></svg>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+<body>
+<svg width="960" height="700"></svg>
 <script type="application/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 <script type="application/javascript">
+var startYear = 1960;
+var endYear = 1963;
+function drawChart(year){
+  var svg = d3.select("svg"),
+      margin = {top: 20, right: 20, bottom: 30, left: 40},
+      width = +svg.attr("width") - margin.left - margin.right,
+      height = +svg.attr("height") - margin.top - margin.bottom - 150,
+      g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var svg = d3.select("svg"),
-    margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = +svg.attr("width") - margin.left - margin.right,
-    height = +svg.attr("height") - margin.top - margin.bottom,
-    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var x = d3.scaleBand()
+      .rangeRound([0, width])
+      .paddingInner(0.05)
+      .align(0.1);
 
-var x = d3.scaleBand()
-    .rangeRound([0, width])
-    .paddingInner(0.05)
-    .align(0.1);
+  var y = d3.scaleLinear()
+      .rangeRound([height, 0]);
 
-var y = d3.scaleLinear()
-    .rangeRound([height, 0]);
+  var z = d3.scaleOrdinal(d3.schemeCategory10);
 
-var z = d3.scaleOrdinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
-
-d3.csv("data.csv", function(d, i, columns) {
+  d3.csv(year+".csv", function(d, i, columns) {
   for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
   d.total = t;
   return d;
@@ -37,11 +43,23 @@ d3.csv("data.csv", function(d, i, columns) {
   var keys = data.columns.slice(1);
 
   data.sort(function(a, b) { return b.total - a.total; });
-  x.domain(data.map(function(d) { return d.State; }));
+
+  data = data.slice(0,10); //getting only top 10
+
+  x.domain(data.map(function(d) { return d["country"]; }));
+
   y.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
-  console.log(keys);
+
   z.domain(keys);
 
+  var myTransition = d3.transition()
+            .duration(1000)
+            .ease(d3.easeLinear)
+            .on("start", function(d){ console.log("transiton start") })
+            .on("end", function(d){ console.log("transiton end") });
+
+
+if(year!=endYear){
   g.append("g")
     .selectAll("g")
     .data(d3.stack().keys(keys)(data))
@@ -50,15 +68,63 @@ d3.csv("data.csv", function(d, i, columns) {
     .selectAll("rect")
     .data(function(d) { return d; })
     .enter().append("rect")
-      .attr("x", function(d) { return x(d.data.State); })
+    .style("opacity","0")
+    .attr("x", function(d) { return x(d.data["country"]); })
+    .attr("y", function(d) { return y(d[1]); })
+    .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+    .attr("width", x.bandwidth())
+    .transition(myTransition)
+    .style("opacity","1")
+    .transition(myTransition)
+    .style("opacity","0");
+
+    g.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+        .style("opacity","0")
+        .attr("y", 0)
+        .attr("x", 9)
+        .attr("dy", ".35em")
+        .attr("transform", "rotate(90)")
+        .style("text-anchor", "start")
+        .transition(myTransition)
+        .style("opacity","1")
+        .transition(myTransition)
+        .style("opacity","0");
+
+  }else{
+    g.append("g")
+      .selectAll("g")
+      .data(d3.stack().keys(keys)(data))
+      .enter().append("g")
+        .attr("fill", function(d) { return z(d.key); })
+      .selectAll("rect")
+      .data(function(d) { return d; })
+      .enter().append("rect")
+      .style("opacity","0")
+      .attr("x", function(d) { return x(d.data["country"]); })
       .attr("y", function(d) { return y(d[1]); })
       .attr("height", function(d) { return y(d[0]) - y(d[1]); })
-      .attr("width", x.bandwidth());
+      .attr("width", x.bandwidth())
+      .transition(myTransition)
+      .style("opacity","1");
 
-  g.append("g")
-      .attr("class", "axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+      g.append("g")
+          .attr("class", "axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x))
+          .selectAll("text")
+          .style("opacity","0")
+          .attr("y", 0)
+          .attr("x", 9)
+          .attr("dy", ".35em")
+          .attr("transform", "rotate(90)")
+          .style("text-anchor", "start")
+          .transition(myTransition)
+          .style("opacity","1");
+  }
 
   g.append("g")
       .attr("class", "axis")
@@ -70,7 +136,7 @@ d3.csv("data.csv", function(d, i, columns) {
       .attr("fill", "#000")
       .attr("font-weight", "bold")
       .attr("text-anchor", "start")
-      .text("Population");
+      .text("Disaster Severity");
 
   var legend = g.append("g")
       .attr("font-family", "sans-serif")
@@ -80,18 +146,57 @@ d3.csv("data.csv", function(d, i, columns) {
     .data(keys.slice().reverse())
     .enter().append("g")
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
+if(year!=endYear){
   legend.append("rect")
+      .style("opacity","0")
       .attr("x", width - 19)
       .attr("width", 19)
       .attr("height", 19)
-      .attr("fill", z);
+      .attr("fill", z)
+      .transition(myTransition)
+      .style("opacity","1")
+      .transition(myTransition)
+      .style("opacity","0");
 
   legend.append("text")
+      .style("opacity","0")
       .attr("x", width - 24)
       .attr("y", 9.5)
       .attr("dy", "0.32em")
-      .text(function(d) { return d; });
+      .text(function(d) { return d; })
+      .transition(myTransition)
+      .style("opacity","1")
+      .transition(myTransition)
+      .style("opacity","0");
+    }else{
+
+      legend.append("rect")
+          .style("opacity","0")
+          .attr("x", width - 19)
+          .attr("width", 19)
+          .attr("height", 19)
+          .attr("fill", z)
+          .transition(myTransition)
+          .style("opacity","1");
+
+      legend.append("text")
+          .style("opacity","0")
+          .attr("x", width - 24)
+          .attr("y", 9.5)
+          .attr("dy", "0.32em")
+          .text(function(d) { return d; })
+          .transition(myTransition)
+          .style("opacity","1");
+    }
 });
+  if(year<endYear){
+      setTimeout(function(){d3.select("svg").selectAll("*").remove(); drawChart(year+1);}, 2000);
+  }
+}
+
+drawChart(startYear);
+
+
 
 </script>
+</body>

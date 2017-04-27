@@ -470,6 +470,298 @@ d3.json("Data/Complete.json", function(error, global_complete) {
 
 .controller('DisasterController', ['$scope', function($scope) {
   //Disaster controller code goes here
+  var startYear = 1960;
+  var endYear = 1963;
+  function drawChart(year){
+    var svg = d3.select("#topcountries").select("svg"),
+        margin = {top: 20, right: 20, bottom: 30, left: 40},
+        width = +svg.attr("width") - margin.left - margin.right,
+        height = +svg.attr("height") - margin.top - margin.bottom - 150,
+        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var x = d3.scaleBand()
+        .rangeRound([0, width])
+        .paddingInner(0.05)
+        .align(0.1);
+
+    var y = d3.scaleLinear()
+        .rangeRound([height, 0]);
+
+    var z = d3.scaleOrdinal(d3.schemeCategory10);
+
+    d3.csv("Data/disaster/"+year+".csv", function(d, i, columns) {
+    for (var i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
+    d.total = t;
+    return d;
+  }, function(error, data) {
+    if (error) throw error;
+
+    var keys = data.columns.slice(1);
+
+    data.sort(function(a, b) { return b.total - a.total; });
+
+    data = data.slice(0,10); //getting only top 10
+
+    x.domain(data.map(function(d) { return d["country"]; }));
+
+    y.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
+
+    z.domain(keys);
+
+    var myTransition = d3.transition()
+              .duration(1000)
+              .ease(d3.easeLinear)
+              .on("start", function(d){ console.log("transiton start") })
+              .on("end", function(d){ console.log("transiton end") });
+
+
+  if(year!=endYear){
+    g.append("g")
+      .selectAll("g")
+      .data(d3.stack().keys(keys)(data))
+      .enter().append("g")
+        .attr("fill", function(d) { return z(d.key); })
+      .selectAll("rect")
+      .data(function(d) { return d; })
+      .enter().append("rect")
+      .style("opacity","0")
+      .attr("x", function(d) { return x(d.data["country"]); })
+      .attr("y", function(d) { return y(d[1]); })
+      .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+      .attr("width", x.bandwidth())
+      .transition(myTransition)
+      .style("opacity","1")
+      .transition(myTransition)
+      .style("opacity","0");
+
+      g.append("g")
+          .attr("class", "axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x))
+          .selectAll("text")
+          .attr("fill","#fff")
+          .style("opacity","0")
+          .attr("y", 0)
+          .attr("x", 9)
+          .attr("dy", ".35em")
+          .attr("transform", "rotate(90)")
+          .style("text-anchor", "start")
+          .transition(myTransition)
+          .style("opacity","1")
+          .transition(myTransition)
+          .style("opacity","0");
+
+    }else{
+      g.append("g")
+        .selectAll("g")
+        .data(d3.stack().keys(keys)(data))
+        .enter().append("g")
+        .attr("fill", function(d) { return z(d.key); })
+        .selectAll("rect")
+        .data(function(d) { return d; })
+        .enter().append("rect")
+        .style("opacity","0")
+        .attr("x", function(d) { return x(d.data["country"]); })
+        .attr("y", function(d) { return y(d[1]); })
+        .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+        .attr("width", x.bandwidth())
+        .transition(myTransition)
+        .style("opacity","1");
+
+        g.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x))
+            .selectAll("text")
+            .attr("fill","#fff")
+            .style("opacity","0")
+            .attr("y", 0)
+            .attr("x", 9)
+            .attr("dy", ".35em")
+            .attr("transform", "rotate(90)")
+            .style("text-anchor", "start")
+            .transition(myTransition)
+            .style("opacity","1");
+    }
+
+    g.append("g")
+        .attr("class", "axis")
+        .attr("fill","#fff")
+        .call(d3.axisLeft(y).ticks(null, "s"))
+        .append("text")
+        .attr("fill", "#fff")
+        .attr("x", 2)
+        .attr("y", y(y.ticks().pop()) + 0.5)
+        .attr("dy", "0.32em")
+        .attr("font-weight", "bold")
+        .attr("text-anchor", "start")
+        .text("Disaster Severity");
+
+    var legend = g.append("g")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 10)
+        .attr("text-anchor", "end")
+        .attr("fill","#fff")
+      .selectAll("g")
+      .data(keys.slice().reverse())
+      .enter().append("g")
+        .attr("fill","#fff")
+        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  if(year!=endYear){
+    legend.append("rect")
+        .style("opacity","0")
+        .attr("x", width - 19)
+        .attr("width", 19)
+        .attr("height", 19)
+        .attr("fill", z)
+        .transition(myTransition)
+        .style("opacity","1")
+        .transition(myTransition)
+        .style("opacity","0");
+
+    legend.append("text")
+        .style("opacity","0")
+        .attr("x", width - 24)
+        .attr("y", 9.5)
+        .attr("dy", "0.32em")
+        .text(function(d) { return d; })
+        .attr("fill","#fff")
+        .transition(myTransition)
+        .style("opacity","1")
+        .transition(myTransition)
+        .style("opacity","0");
+      }else{
+
+        legend.append("rect")
+            .style("opacity","0")
+            .attr("x", width - 19)
+            .attr("width", 19)
+            .attr("height", 19)
+            .attr("fill", z)
+            .transition(myTransition)
+            .style("opacity","1");
+
+        legend.append("text")
+            .style("opacity","0")
+            .attr("x", width - 24)
+            .attr("y", 9.5)
+            .attr("dy", "0.32em")
+            .attr("fill","#fff")
+            .text(function(d) { return d; })
+            .transition(myTransition)
+            .style("opacity","1");
+      }
+  });
+    if(year<endYear){
+        setTimeout(function(){d3.select("#topcountries").select("svg").selectAll("*").remove(); drawChart(year+1);}, 2000);
+    }
+  }
+  function generateChart(year){
+    var svg = d3.select("#topdisasters").select("svg"),
+        margin = {top: 20, right: 20, bottom: 30, left: 80},
+        width = +svg.attr("width") - margin.left - margin.right - 50,
+        height = +svg.attr("height") - margin.top - margin.bottom;
+
+    var tooltip = d3.select("#topdisasters").append("div").attr("class", "toolTip");
+
+    var myTransition = d3.transition()
+              .duration(1000)
+              .ease(d3.easeLinear)
+              .on("start", function(d){ console.log("transiton start") })
+              .on("end", function(d){ console.log("transiton end") });
+
+    var x = d3.scaleLinear().range([0, width]);
+    var y = d3.scaleBand().range([height, 0]);
+
+    var g = svg.append("g")
+    		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    d3.json("Data/disaster/topDisasters_"+year+".json", function(error, data) {
+      	if (error) throw error;
+
+      	data.sort(function(a, b) { return a.severity - b.severity; });
+
+      	x.domain([0, d3.max(data, function(d) { return d.severity; })]);
+        y.domain(data.map(function(d) { return d.disaster; })).padding(0.1);
+
+        g.append("g")
+            .attr("class", "x axis")
+           	.attr("transform", "translate(50," + height + ")")
+          	.call(d3.axisBottom(x).ticks(5).tickFormat(function(d) { return parseInt(d); }).tickSizeInner([-height]));
+
+        g.append("g")
+            .attr("class", "y axis")
+            .attr("transform", "translate(50, 0)")
+            .call(d3.axisLeft(y))
+
+       svg.append("text")
+            .attr("y", 0)
+            .attr("x", margin.left)
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("Type of Disaster");
+
+      svg.append("text")
+           .attr("y", parseInt(svg.attr("height"))+margin.top)
+           .attr("x", svg.attr("width")/2)
+           .attr("dy", "1em")
+           .attr("fill","none")
+           .style("stroke","#000")
+           .style("text-anchor", "middle")
+           .text("Severity");
+
+        if(year!=endYear){
+          g.selectAll(".bar")
+              .data(data)
+            .enter().append("rect")
+              .attr("class", "bar")
+              .attr("x", 50)
+              .attr("height", y.bandwidth())
+              .attr("y", function(d) { return y(d.disaster); })
+              .on("mousemove", function(d){
+                  tooltip
+                    .style("left", d3.event.pageX - 50 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
+                    .style("display", "inline-block")
+                    .html("Disaster Type: " + (d.disaster) + "<br>" + "Disaster Severity: " + (d.severity));
+              })
+              .on("mouseout", function(d){ tooltip.style("display", "none");})
+              .attr("width", function(d) { return 0; })
+              .transition(myTransition)
+              .attr("width", function(d) { return x(d.severity); })
+              .transition(myTransition)
+              .attr("width", function(d) { return 0; });
+
+        }else{
+        g.selectAll(".bar")
+            .data(data)
+          .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", 50)
+            .attr("height", y.bandwidth())
+            .attr("y", function(d) { return y(d.disaster); })
+            .attr("width", function(d) { return 0; })
+            .transition(myTransition)
+            .attr("width", function(d) { return x(d.severity); })
+            .on("mousemove", function(d){
+                tooltip
+                  .style("left", d3.event.pageX - 50 + "px")
+                  .style("top", d3.event.pageY - 70 + "px")
+                  .style("display", "inline-block")
+                  .html("Disaster Type: " + (d.disaster) + "<br>" + "Disaster Severity: " + (d.severity));
+            })
+        		.on("mouseout", function(d){ tooltip.style("display", "none");});
+          }
+    });
+
+    if(year<endYear){
+        setTimeout(function(){d3.select("#topdisasters").select("svg").selectAll("*").remove(); generateChart(year+1);}, 2000);
+    }
+  }
+
+  drawChart(startYear);
+  generateChart(startYear);
 }])
 
 .controller('IceController', ['$scope', function($scope) {
