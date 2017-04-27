@@ -131,11 +131,42 @@ angular.module('datavizApp')
                     return ("Country Name - " + d.name + "\n" + "Population - " + (d.Population) + "\n" + "GDP(in $ million) - " + (d.GDP) + "\n" + "CO2 Emission(kT) - " + (d.CO2))
                 });
 
-            // Start a transition that interpolates the data based on year.
-            /*svg.transition()
-                .duration(1000)
-                .ease(d3.easeLinear)
-                .tween("year", tweenYear);*/
+                function onlyUnique(value, index, self) {
+            return self.indexOf(value) === index;
+        }
+
+        var legend_array = [];
+        for (var i = 0; i < 202; i++) {
+            legend_array.push(interpolateData(1960)[i]['region']);
+        }
+        var uniqueRegions = legend_array.filter((onlyUnique));
+
+        var legend = svg.append("g")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", 10)
+            .attr("text-anchor", "end")
+            .selectAll("g")
+            .data(uniqueRegions)
+            .enter().append("g")
+            .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+        //Creating rectangle for each year and filling with its respective color
+        legend.append("rect")
+            .attr("x", width - 19)
+            .attr("width", 19)
+            .attr("height", 19)
+            .attr("fill", function (d) {
+                return colorScale(d);
+            });
+
+        //Appending year as text value
+        legend.append("text")
+            .attr("x", width - 24)
+            .attr("y", 9.5)
+            .attr("dy", "0.32em")
+            .style("fill", "#fff")
+            .text(function(d) { return d });
+
 
             // Positions the dots based on data.
             function position(bubble) {
