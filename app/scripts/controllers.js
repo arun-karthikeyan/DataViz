@@ -901,13 +901,13 @@ function northPole(){
       3.5656,
       16.34194]);
     svg.append("g")
-      .attr("class", "x iceAxis")
+      .attr("class", "x-iceAxis")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
 
     // add the y axis
     svg.append("g")
-        .attr("class", "y iceAxis")
+        .attr("class", "y-iceAxis")
         .call(yAxis)
       .append("text")
         .attr("transform","rotate(-90)")
@@ -1030,13 +1030,13 @@ function northPole(){
       3.5656,
       16.34194]);
     svg.append("g")
-      .attr("class", "x iceAxis")
+      .attr("class", "x-iceAxis")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
 
     // add the y axis
     svg.append("g")
-        .attr("class", "y iceAxis")
+        .attr("class", "y-iceAxis")
         .call(yAxis)
       .append("text")
         .attr("transform","rotate(-90)")

@@ -180,3 +180,20 @@ text{
 #topdisasters .y-axis path, #topdisasters .x-axis path{
   stroke: #fff !important;
 }
+
+/** Ice Extent Styles **/
+#northPole .y-iceAxis text, #northPole .x-iceAxis text, #southPole .y-iceAxis text, #southPole .x-iceAxis text {
+  fill: #fff !important;
+}
+
+#northPole .x-iceAxis path, #southPole .x-iceAxis path, #northPole .y-iceAxis path, #southPole .y-iceAxis path {
+  display: inline;
+  visibility: visible;
+  stroke: #fff !important;
+}
+
+#northPole .line, #southPole .line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
