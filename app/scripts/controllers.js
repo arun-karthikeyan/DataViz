@@ -909,11 +909,11 @@ function northPole(){
         .call(yAxis)
       .append("text")
         .attr("transform","rotate(-90)")
-        .attr("y",-40)
+        .attr("y",-50)
         .attr("dy",".71em")
         .style("text-anchor","end")
         .attr("fill", "#fff")
-        .text("Temperature");
+        .text("Ice Extent (10^6 sq. km.)");
 
     var allMonths = svg.selectAll(".eachMonth")
         .data(years)
@@ -946,6 +946,9 @@ function northPole(){
     var yScale = d3.scaleLinear().range([height, 0]);
     var color = d3.scaleLinear(d3.schemeBlues);
 
+     var colorScale = d3.scaleSequential(d3.interpolateCool)
+                .domain([1979, 2016]);
+
     var xAxis = d3.axisBottom(xScale);
     var yAxis = d3.axisLeft(yScale);
 
@@ -963,7 +966,7 @@ function northPole(){
                 .attr("class", "focus")
                 .style("display","none");
 
-    d3.csv("Data/IceExtent.csv", function(d){
+    d3.csv("Data/SouthPoleIceExtent.csv", function(d){
       return {
         month: d['Month'],
         1979: +d['1979'],
@@ -1025,8 +1028,8 @@ function northPole(){
       };
       })
     yScale.domain([
-      3.5656,
-      16.34194]);
+      26.758,
+      592.692]);
     svg.append("g")
       .attr("class", "x-iceAxis")
       .attr("transform", "translate(0," + height + ")")
@@ -1038,17 +1041,18 @@ function northPole(){
         .call(yAxis)
       .append("text")
         .attr("transform","rotate(-90)")
-        .attr("y",-40)
+        .attr("y",-50)
         .attr("dy",".71em")
         .style("text-anchor","end")
         .attr("fill", "#000")
-        .text("Temperature");
+        .text("Ice Extent (10^6 sq. km.)");
 
     var allMonths = svg.selectAll(".eachMonth")
         .data(years)
       .enter().append("g")
         .attr("class","eachMonth");
 
+    console.log(colorScale(2016));
     // add the stock price paths
     allMonths.append("path")
       .attr("class","line")
@@ -1056,7 +1060,7 @@ function northPole(){
       .attr("d", function(d) {
         return line(d.values);
       })
-      .style("stroke", function(d) { return color(d.year); });
+      .style("stroke", function(d) {return colorScale(d.year); });
     });
     }
     northPole();
