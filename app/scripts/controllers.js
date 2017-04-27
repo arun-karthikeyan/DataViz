@@ -1028,8 +1028,8 @@ function northPole(){
       };
       })
     yScale.domain([
-      26.758,
-      592.692]);
+      2.48217,
+      19.7564]);
     svg.append("g")
       .attr("class", "x-iceAxis")
       .attr("transform", "translate(0," + height + ")")
