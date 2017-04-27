@@ -474,12 +474,457 @@ d3.json("Data/Complete.json", function(error, global_complete) {
 
 .controller('IceController', ['$scope', function($scope) {
   //Ice controller code goes here
+
+function northPole(){
+
+  var margin = { top: 0, right: 100, bottom: 40, left: 100 };
+    var height = 500 - margin.top - margin.bottom;
+    var width = 960 - margin.left - margin.right;
+
+    var svg = d3.select("#northPole").append("svg")
+        .attr("width",width + margin.left + margin.right)
+        .attr("height",height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+    var xScale = d3.scalePoint().domain(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]).range([0, width]);
+    var yScale = d3.scaleLinear().range([height, 0]);
+    var color = d3.scaleLinear(d3.schemeBlues);
+
+    var xAxis = d3.axisBottom(xScale);
+    var yAxis = d3.axisLeft(yScale);
+
+    //var bisectDate = d3.bisector(function(d) { return d.date; }).left;
+
+
+    var line = d3.line()
+      .curve(d3.curveBasis)
+      .x(function(d) { return xScale(d.month); })
+      .y(function(d) { return yScale(d.temp); });
+
+
+      
+    var focus = svg.append("g")
+                .attr("class", "focus")
+                .style("display","none");
+
+    d3.csv("Data/IceExtent.csv", function(d){
+      return {
+        month: d['Month'],
+        1979: +d['1979'],
+        1980: +d['1980'],
+        1981: +d['1981'],
+        1982: +d['1982'],
+        1983: +d['1983'],
+        1984: +d['1984'],
+        1985: +d['1985'],
+        1986: +d['1986'],
+        1987: +d['1987'],
+        1988: +d['1988'],
+        1989: +d['1989'],
+        1990: +d['1990'],
+        1991: +d['1991'],
+        1992: +d['1992'],
+        1993: +d['1993'],
+        1994: +d['1994'],
+        1995: +d['1995'],
+        1996: +d['1996'],
+        1997: +d['1997'],
+        1998: +d['1998'],
+        1999: +d['1999'],
+        2000: +d['2000'],
+        2001: +d['2001'],
+        2002: +d['2002'],
+        2003: +d['2003'],
+        2004: +d['2004'],
+        2005: +d['2005'],
+        2006: +d['2006'],
+        2007: +d['2007'],
+        2008: +d['2008'],
+        2009: +d['2009'],
+        2010: +d['2010'],
+        2011: +d['2011'],
+        2012: +d['2012'],
+        2013: +d['2013'],
+        2014: +d['2014'],
+        2015: +d['2015'],
+        2016: +d['2016']
+
+      };
+    }, 
+    function (error, data){
+    var x = d3.keys(data[0]).filter(function(key) { return key !== "month"; });
+    var i;
+    for (i = 0; i < 12; i++)
+    {
+      x[i] = parseFloat(x[i]);
+    }
+
+    color.domain(x);
+    var years = color.domain().map(function(year){
+      return{
+        year: year,
+        values: data.map(function(d){
+          return {month: d.month, temp: d[year]};
+        })
+      };
+      })
+    yScale.domain([
+      3.5656,
+      16.34194]);
+    svg.append("g")
+      .attr("class", "x iceAxis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+    // add the y axis
+    svg.append("g")
+        .attr("class", "y iceAxis")
+        .call(yAxis)
+      .append("text")
+        .attr("transform","rotate(-90)")
+        .attr("y",-40)
+        .attr("dy",".71em")
+        .style("text-anchor","end")
+        .attr("fill", "#000")
+        .text("Temperature");
+
+    var allMonths = svg.selectAll(".eachMonth")
+        .data(years)
+      .enter().append("g")
+        .attr("class","eachMonth");
+
+    // add the stock price paths
+    allMonths.append("path")
+      .attr("class","line")
+      .attr("id",function(d,i){ return "id" + i; })
+      .attr("d", function(d) {
+        return line(d.values); 
+      })
+      .style("stroke", function(d) { return color(d.year); });
+    });
+}
+    function southPole(){
+      var margin = { top: 0, right: 100, bottom: 40, left: 100 };
+    var height = 500 - margin.top - margin.bottom;
+    var width = 960 - margin.left - margin.right;
+
+    var svg = d3.select("#southPole").append("svg")
+        .attr("width",width + margin.left + margin.right)
+        .attr("height",height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+    var xScale = d3.scalePoint().domain(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]).range([0, width]);
+    var yScale = d3.scaleLinear().range([height, 0]);
+    var color = d3.scaleLinear(d3.schemeBlues);
+
+    var xAxis = d3.axisBottom(xScale);
+    var yAxis = d3.axisLeft(yScale);
+
+    //var bisectDate = d3.bisector(function(d) { return d.date; }).left;
+
+
+    var line = d3.line()
+      .curve(d3.curveBasis)
+      .x(function(d) { return xScale(d.month); })
+      .y(function(d) { return yScale(d.temp); });
+
+
+      
+    var focus = svg.append("g")
+                .attr("class", "focus")
+                .style("display","none");
+
+    d3.csv("Data/IceExtent.csv", function(d){
+      return {
+        month: d['Month'],
+        1979: +d['1979'],
+        1980: +d['1980'],
+        1981: +d['1981'],
+        1982: +d['1982'],
+        1983: +d['1983'],
+        1984: +d['1984'],
+        1985: +d['1985'],
+        1986: +d['1986'],
+        1987: +d['1987'],
+        1988: +d['1988'],
+        1989: +d['1989'],
+        1990: +d['1990'],
+        1991: +d['1991'],
+        1992: +d['1992'],
+        1993: +d['1993'],
+        1994: +d['1994'],
+        1995: +d['1995'],
+        1996: +d['1996'],
+        1997: +d['1997'],
+        1998: +d['1998'],
+        1999: +d['1999'],
+        2000: +d['2000'],
+        2001: +d['2001'],
+        2002: +d['2002'],
+        2003: +d['2003'],
+        2004: +d['2004'],
+        2005: +d['2005'],
+        2006: +d['2006'],
+        2007: +d['2007'],
+        2008: +d['2008'],
+        2009: +d['2009'],
+        2010: +d['2010'],
+        2011: +d['2011'],
+        2012: +d['2012'],
+        2013: +d['2013'],
+        2014: +d['2014'],
+        2015: +d['2015'],
+        2016: +d['2016']
+
+      };
+    }, 
+    function (error, data){
+    var x = d3.keys(data[0]).filter(function(key) { return key !== "month"; });
+    var i;
+    for (i = 0; i < 12; i++)
+    {
+      x[i] = parseFloat(x[i]);
+    }
+
+    color.domain(x);
+    var years = color.domain().map(function(year){
+      return{
+        year: year,
+        values: data.map(function(d){
+          return {month: d.month, temp: d[year]};
+        })
+      };
+      })
+    yScale.domain([
+      3.5656,
+      16.34194]);
+    svg.append("g")
+      .attr("class", "x iceAxis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+    // add the y axis
+    svg.append("g")
+        .attr("class", "y iceAxis")
+        .call(yAxis)
+      .append("text")
+        .attr("transform","rotate(-90)")
+        .attr("y",-40)
+        .attr("dy",".71em")
+        .style("text-anchor","end")
+        .attr("fill", "#000")
+        .text("Temperature");
+
+    var allMonths = svg.selectAll(".eachMonth")
+        .data(years)
+      .enter().append("g")
+        .attr("class","eachMonth");
+
+    // add the stock price paths
+    allMonths.append("path")
+      .attr("class","line")
+      .attr("id",function(d,i){ return "id" + i; })
+      .attr("d", function(d) {
+        return line(d.values); 
+      })
+      .style("stroke", function(d) { return color(d.year); });
+    });       
+    }
+    northPole();
+    southPole();
 }])
 
-.controller('TemperatureController', ['$scope', function($scope) {
-  //Temperature controller code goes here
-}])
+    .controller('TemperatureController', ['$scope', function($scope) {
+      //Temperature controller code goes here
+      function globalTemperature(){
+        var margin = { top: 0, right: 100, bottom: 40, left: 100 };
+        var height = 500 - margin.top - margin.bottom;
+        var width = 960 - margin.left - margin.right;
 
+        var svg = d3.select("#globalTemperature").append("svg")
+        .attr("width",width + margin.left + margin.right)
+        .attr("height",height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+        var xScale = d3.scaleTime().range([0, width]);
+        var yScale = d3.scaleLinear().range([height, 0]);
+        var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        var xAxis = d3.axisBottom(xScale);
+        var yAxis = d3.axisLeft(yScale);
+
+
+        var line = d3.line()
+        .curve(d3.curveBasis)
+        .x(function(d) { return xScale(d.date); })
+        .y(function(d) { return yScale(d.temp); });
+
+        d3.csv("Data/newTemp.csv", function(d){
+        return {
+        date: new Date(d.date, 0),
+        globalTemp: +d.Global
+        };
+        }, 
+        function (error, data){
+        data.sort(function(a, b){
+        return a.date - b.date;
+        });
+
+        color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
+        var years = color.domain().map(function(name){
+        return{
+        name: name,
+        values: data.map(function(d){
+          return {date: d.date, temp: d[name]};
+        })
+        };
+        })
+        xScale.domain([
+        d3.min(years, function(c) { return d3.min(c.values, function(v) { return v.date; }); }),
+        d3.max(years, function(c) { return d3.max(c.values, function(v) { return v.date; }); })
+        ]);
+        yScale.domain([
+        -0.47,
+        0.98]);
+        //console.log(xScale.domain());
+        svg.append("g")
+        .attr("class", "x tempAxis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+        // add the y axis
+        svg.append("g")
+        .attr("class", "y tempAxis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform","rotate(-90)")
+        .attr("y",-40)
+        .attr("dy",".71em")
+        .style("text-anchor","end")
+        .attr("fill", "#000")
+        .text("Temperature");
+
+        var temp = svg.selectAll(".temps")
+        .data(years)
+        .enter().append("g")
+        .attr("class","temps");
+
+        // add the stock price paths
+        temp.append("path")
+        .attr("class","line")
+        .attr("id",function(d,i){ return "id" + i; })
+        .attr("d", function(d) {
+        return line(d.values); 
+        })
+        .style("stroke", function(d) { return color(d.name); });
+
+    });
+    }
+
+    function polarTemperature(){
+        var margin = { top: 0, right: 100, bottom: 40, left: 100 };
+        var height = 500 - margin.top - margin.bottom;
+        var width = 960 - margin.left - margin.right;
+
+        var svg = d3.select("#polarTemperature").append("svg")
+            .attr("width",width + margin.left + margin.right)
+            .attr("height",height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+        var xScale = d3.scaleTime().range([0, width]);
+        var yScale = d3.scaleLinear().range([height, 0]);
+        var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        var xAxis = d3.axisBottom(xScale);
+        var yAxis = d3.axisLeft(yScale);
+
+        var bisectDate = d3.bisector(function(d) { return d.date; }).left;
+
+
+        var line = d3.line()
+          .curve(d3.curveBasis)
+          .x(function(d) { return xScale(d.date); })
+          .y(function(d) { return yScale(d.temp); });
+
+
+          
+        var focus = svg.append("g")
+                    .attr("class", "focus")
+                    .style("display","none");
+
+        d3.csv("Data/newTemp.csv", function(d){
+          return {
+            date: new Date(d.date, 0),
+            north: +d.North,
+            south: +d.South
+          };
+        }, 
+        function (error, data){
+          data.sort(function(a, b){
+            return a.date - b.date;
+          });
+
+        color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
+        var poles = color.domain().map(function(name){
+          return{
+            name: name,
+            values: data.map(function(d){
+              return {date: d.date, temp: d[name]};
+            })
+          };
+          })
+        xScale.domain([
+          d3.min(poles, function(c) { return d3.min(c.values, function(v) { return v.date; }); }),
+          d3.max(poles, function(c) { return d3.max(c.values, function(v) { return v.date; }); })
+        ]);
+        yScale.domain([
+          -0.5,
+          1.26]);
+        svg.append("g")
+          .attr("class", "x tempAxis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
+
+        // add the y axis
+        svg.append("g")
+            .attr("class", "y tempAxis")
+            .call(yAxis)
+          .append("text")
+            .attr("transform","rotate(-90)")
+            .attr("y",-40)
+            .attr("dy",".71em")
+            .style("text-anchor","end")
+            .attr("fill", "#000")
+            .text("Temperature");
+
+        var pole = svg.selectAll(".poleNS")
+            .data(poles)
+          .enter().append("g")
+            .attr("class","poleNS");
+
+        // add the stock price paths
+        pole.append("path")
+          .attr("class","line")
+          .attr("id",function(d,i){ return "id" + i; })
+          .attr("d", function(d) {
+            return line(d.values); 
+          })
+          .style("stroke", function(d) { return color(d.name); });
+    });
+}
+
+globalTemperature();
+polarTemperature();
+
+}])
 .controller('AboutController', ['$scope', function($scope) {
   //About controller code goes here
 }])
