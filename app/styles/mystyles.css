@@ -19,3 +19,68 @@
   /*background: #7986CB;*/
   /*color: floralwhite;*/
 }
+
+/* Utkarsh's styles */
+#chart {
+    margin-left: 0px;
+    height: 500px;
+}
+
+text{
+  font: 13px "sans-serif";
+}
+
+#start{
+    font: 20px "sans-serif";
+    margin-left: 90px;
+}
+
+#finish{
+    position: absolute;
+    font: 20px "sans-serif";
+    margin-left: 875px;
+}
+
+#play{
+    position: absolute;
+    margin-left: 40px;
+}
+
+.bubble, line {
+  stroke: #fff;
+}
+
+.axis path {
+  fill: none;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
+
+.label {
+  fill: #fff;
+}
+
+.year.label {
+  font: 500 200px "sans-serif";
+  fill: #fff;
+}
+
+#slider {
+    -webkit-appearance: none !important;
+    -webkit-border-radius: 5px;
+    border: 1px solid #000;
+    background-color: #ffffff;
+    height: 10px;
+    width: 925px;
+    margin: 5px 20px 10px 95px;
+}
+
+#slider::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    -webkit-border-radius: 15px;
+    background-color: #ffffff;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#bbb), to(#888));
+    border: 2px solid #000;
+    height: 25px;
+    width: 25px;
+}
