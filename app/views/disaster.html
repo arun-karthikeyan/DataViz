@@ -1,16 +1,24 @@
 <div class="container bg-inverse text-white">
-  <div class="row row-header" style="text-align: center; padding: 25px 0px; margin: 50px 0px; border-bottom: 1px ridge">
+  <div class="row row-header" style="text-align: center; border-bottom: 1px ridge">
     <div class="col-xs-12" style="width: 100%">
       <h2>Disaster Dashboard</h2>
     </div>
   </div>
-  <div class="row row-content">
-    <div class="col-xs-12" style="width: 100%">
+  <div class="row row-content" style="padding-top: 10px;">
+    <div class="col-sm-12">
+      <h6>So if Global Warming does exist. What factors can it effect?
+        We are exploring if this can phenomenon influence natural disasters.
+         We considered all the climatic disasters for this visualization.
+       </h6>
+    </div>
+    <div class="col-sm-12" style="width: 100%">
+      <div id  = "disasterchoroplethwrapper">
+        <button id = "play"> Play </button>
+        <span id = "year" style = "color: white;"> 1960 </span>
+      </div>
+
       <div id="disasterchoropleth" style="width: 100%; height: 100%">
-        <div id  = "wrapper">
-          <button id = "play"> Play </button>
-          <span id = "year" style = "color: white;"> 1987 </span>
-        </div>
+        <svg style="width: 100%; height: 85%"></svg>
       </div>
     </div>
   </div>
@@ -28,5 +36,8 @@
           <svg style="width: 100%; height: 50%"></svg>
         </div>
     </div>
+  </div>
+  <div class="row">
+    <h6>There has been a considerable rise in frequency of disasters throughout the years.</h6>
   </div>
 </div>
