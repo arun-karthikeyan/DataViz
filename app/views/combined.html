@@ -122,12 +122,12 @@ button {
 	position: relative;
 	left: 5px;
 	top: 45%;
-	font-weight: bold;	
+	font-weight: bold;
 }
 
 #year {
 	color: white;
-	font-size: 25px;	
+	font-size: 25px;
 }
 
 
@@ -139,7 +139,7 @@ button {
 		</div>
 	</div>
 	<div class = "row row-header" style="text-align: center; padding: 5px 0px; margin: 10px 0px;">
-		<div class = "col-xs-12" style="width: 70%"> 
+		<div class = "col-xs-12" style="width: 70%">
 			<div class = "row row-header" style="text-align: center; padding: 5px 0px; margin: 10px 0px;">
 				<div class = "col-xs-12" id = "tempArea" style = "width: 100%">
 					<p style = "color:white;">Temperature</h2>
@@ -149,7 +149,7 @@ button {
 						<div id = "mapArea"></div>
 						<div class = "slider">
 							<button type="button" id="start">Play</button>
-							<input type='range' min='1960' max='2012' step='1' value='1960' id='rangeSlider'/> 
+							<input type='range' min='1960' max='2012' step='1' value='1960' id='rangeSlider'/>
 							<output name = "year" id = "year"> 1960 </output>
 						</div>
 					</div>
@@ -234,13 +234,13 @@ button {
 		                 .precision(.1);
 		  path = d3.geoPath()
 		          .projection(projection);
-		  
+
 		  graticule = d3.geoGraticule();
 
 		  svg = d3.select("#mapArea")
 		          .insert("svg")
 		          .attr("width", width)
-		          .attr("height", height);  
+		          .attr("height", height);
 
 		  svg.enter().insert(".stroke");
 
@@ -303,7 +303,7 @@ button {
 					.text("DISASTERS");
 			svgLegend.append("rect")
     				.attr("x", 5)
-				    .attr("y", function(){return legendHeight/4 + 20}) 
+				    .attr("y", function(){return legendHeight/4 + 20})
 				    .attr("width", cellWidth)
 				    .attr("height", cellHeight)
 				    .style("fill", "#08519c")
@@ -311,7 +311,7 @@ button {
 
 			svgLegend.append("rect")
     				.attr("x", 5)
-				    .attr("y", function(){return legendHeight/4 + 50}) 
+				    .attr("y", function(){return legendHeight/4 + 50})
 				    .attr("width", cellWidth)
 				    .attr("height", cellHeight)
 				    .style("fill", "#006d2c")
@@ -319,7 +319,7 @@ button {
 
 			svgLegend.append("rect")
     				.attr("x", 5)
-				    .attr("y", function(){return legendHeight/4 + 80;}) 
+				    .attr("y", function(){return legendHeight/4 + 80;})
 				    .attr("width", cellWidth)
 				    .attr("height", cellHeight)
 				    .style("fill", "#993404")
@@ -327,7 +327,7 @@ button {
 
 			svgLegend.append("rect")
 					.attr("x", 5)
-				    .attr("y", function(){return legendHeight/4 + 110;}) 
+				    .attr("y", function(){return legendHeight/4 + 110;})
 				    .attr("width", cellWidth)
 				    .attr("height", cellHeight)
 				    .style("fill", "#810f7c")
@@ -335,7 +335,7 @@ button {
 
 			svgLegend.append("rect")
 					.attr("x", 5)
-				    .attr("y", function(){return legendHeight/4 + 140;}) 
+				    .attr("y", function(){return legendHeight/4 + 140;})
 				    .attr("width", cellWidth)
 				    .attr("height", cellHeight)
 				    .style("fill", "#ff9933")
@@ -440,7 +440,7 @@ button {
 		      numberOfDisasters = numberOfDisasters + 1;
 		    }
 		  });
-		  
+
 		  co2Measure = globalCO2.filter(function(co2){
 		    return co2['Year'] == currentYear;
 		  });
@@ -497,7 +497,7 @@ button {
 		  radialGradient.append("stop")
 		    .attr("offset", "100%")
 		    .attr("stop-color", "#fefefe");
-		    
+
 		  svg.selectAll("#sphere")
 		    .transition()
 		    .style("fill", "url(#radial-gradient)")
@@ -523,7 +523,7 @@ button {
 		    .style("fill", "#006d2c")
 		    .style("fill-opacity", 0.75)
 		    .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
-		    .attr("r", function(d){return radius(d.storms);});          
+		    .attr("r", function(d){return radius(d.storms);});
 
 		  svg.append("g")
 		    .attr("class", "bubble")
@@ -586,25 +586,25 @@ button {
 		}
 
 		function animate(){
-		  var timer;  
-		  d3.select('#start')  
-		    .on('click', function() {  
-		      if(playing == false) {  
+		  var timer;
+		  d3.select('#start')
+		    .on('click', function() {
+		      if(playing == false) {
 		      	var b= d3.select("#rangeSlider");
 		      	if (b.property("value") != 1960){
 		      		currentYear = parseInt(b.property("value"));
 		      		console.log(currentYear);
 		      	}
-		        timer = setInterval(function(){  
-				  if(currentYear < endYear) {  
-		            currentYear +=1;  
-		          } 
+		        timer = setInterval(function(){
+				  if(currentYear < endYear) {
+		            currentYear +=1;
+		          }
 		          else {
-		            currentYear = startYear;  
+		            currentYear = startYear;
 		            clearInterval(timer);
 		          }
 		          var b= d3.select("#rangeSlider");
-			      b.property("value", currentYear); 
+			      b.property("value", currentYear);
 			      console.log(b.property("value"));
 		          svg.selectAll("g")
 		            .transition()
@@ -612,19 +612,19 @@ button {
 		          svg.selectAll("radialGradient")
 		            .transition()
 		            .remove();
-		          joinData();  
+		          joinData();
 		          d3.select('#year').html(currentYear);
 		          d3.select('.co2Value').html(carbonValue);
 		          d3.select('.disasterNo').html(numberOfDisasters);
 		        }, 1000);
-		        
-		        d3.select(this).html('stop');  
-		        playing = true;   
-		      } 
-		      else {    
-		        clearInterval(timer);  
-		        d3.select(this).html('play');   
-		        playing = false;   
+
+		        d3.select(this).html('stop');
+		        playing = true;
+		      }
+		      else {
+		        clearInterval(timer);
+		        d3.select(this).html('play');
+		        playing = false;
 		      }
 		  });
 		}
