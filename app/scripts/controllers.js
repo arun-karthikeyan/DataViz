@@ -6,6 +6,13 @@ angular.module('datavizApp')
   //Index controller code goes here
 }])
 
+/*
+-Referred Mike Bostock's example for creating bubble chart
+-https://bost.ocks.org/mike/nations/
+-Referred Mike Bostock's example for clustered column chart
+-https://bl.ocks.org/mbostock/3887051
+*/
+
 .controller('CO2Controller', ['$scope', function($scope) {
   //CO2 controller code goes here
   function vis1Init(){
@@ -133,7 +140,7 @@ angular.module('datavizApp')
                 function onlyUnique(value, index, self) {
             return self.indexOf(value) === index;
         }
-
+        //Creating legends for the chart
         var legend_array = [];
         for (var i = 0; i < 202; i++) {
             legend_array.push(interpolateData(1960)[i]['region']);
@@ -389,6 +396,19 @@ d3.csv("Data/CO2_data.csv", function(d, i, columns) {
     vis1Init();
 }])
 
+/*
+-Referred Jason Davies's example for creating this parallel coordinates visualization
+-https://bl.ocks.org/jasondavies/1341281
+-Referred AB Segler's example for mouse-hover tooltip
+-https://bl.ocks.org/jasondavies/1341281
+-Referred Rich Donohu's example for creating the choropleth map
+-http://bl.ocks.org/rgdonohue/9280446
+-Referred this git page for creating borders
+-https://github.com/maptime-ams/animated-borders-d3js
+-Referred flowing data's example for creating animation transitions between different vis
+-http://flowingdata.com/2013/01/17/how-to-animate-transitions-between-multiple-charts/
+*/
+
 .controller('CombinedController', ['$scope', function($scope) {
   //Combined controller code goes here
   function combinedInit(){
@@ -496,6 +516,17 @@ d3.json("Data/Complete.json", function(error, global_complete) {
   }
   combinedInit();
 }])
+
+/*
+-Referred Mike Bostock's example for stacked bar chart
+-https://bl.ocks.org/mbostock/3886208
+-Referred Kiran's example for horizontal bar chart
+-https://bl.ocks.org/mbostock/3887051
+-Referred git page for D3's transition function
+-https://github.com/d3/d3/blob/master/API.md#transitions-d3-transition
+-Referred Tom Carden's example for bar char update pattern
+-https://bl.ocks.org/RandomEtc/cff3610e7dd47bef2d01
+*/
 
 .controller('DisasterController', ['$scope', function($scope) {
   //Disaster controller code goes here
@@ -943,6 +974,7 @@ d3.json("Data/Complete.json", function(error, global_complete) {
 
 }])
 
+
 .controller('IceController', ['$scope', function($scope) {
   //Ice controller code goes here
 
@@ -1217,7 +1249,16 @@ function northPole(){
     northPole();
     southPole();
 }])
-
+/*
+-Referred Mike Bostock's example for creating this multi-line graph
+-https://bl.ocks.org/mbostock/3884955
+-Referred Ben Collin's example multi line series chart
+-http://www.benlcollins.com/javascript/multi-series-d3-line-chart/
+-Referred D3 noob's example for tooltip using scattered plot
+-http://bl.ocks.org/d3noob/a22c42db65eb00d4e369
+-Referred Bob Monteverde's example for tooltip using scattered plot
+-http://bl.ocks.org/bobmonteverde/2070123
+*/
     .controller('TemperatureController', ['$scope', function($scope) {
       //Temperature controller code goes here
       function globalTemperature(){
