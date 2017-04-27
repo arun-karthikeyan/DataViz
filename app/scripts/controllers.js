@@ -1088,7 +1088,7 @@ function northPole(){
         .x(function(d) { return xScale(d.date); })
         .y(function(d) { return yScale(d.temp); });
 
-        d3.csv("Data/newTemp.csv", function(d){
+        d3.csv("Data/newtemp.csv", function(d){
         return {
         date: new Date(d.date, 0),
         globalTemp: +d.Global
@@ -1183,7 +1183,7 @@ function northPole(){
                     .attr("class", "focus")
                     .style("display","none");
 
-        d3.csv("Data/newTemp.csv", function(d){
+        d3.csv("Data/newtemp.csv", function(d){
           return {
             date: new Date(d.date, 0),
             north: +d.North,
