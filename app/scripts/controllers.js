@@ -1121,13 +1121,13 @@ function northPole(){
         0.98]);
         //console.log(xScale.domain());
         svg.append("g")
-        .attr("class", "x tempAxis")
+        .attr("class", "x-tempAxis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
 
         // add the y axis
         svg.append("g")
-        .attr("class", "y tempAxis")
+        .attr("class", "y-tempAxis")
         .call(yAxis)
         .append("text")
         .attr("transform","rotate(-90)")
@@ -1216,13 +1216,13 @@ function northPole(){
           -0.5,
           1.26]);
         svg.append("g")
-          .attr("class", "x tempAxis")
+          .attr("class", "x-tempAxis")
           .attr("transform", "translate(0," + height + ")")
           .call(xAxis);
 
         // add the y axis
         svg.append("g")
-            .attr("class", "y tempAxis")
+            .attr("class", "y-tempAxis")
             .call(yAxis)
           .append("text")
             .attr("transform","rotate(-90)")

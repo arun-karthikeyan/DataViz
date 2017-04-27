@@ -197,3 +197,20 @@ text{
   stroke: steelblue;
   stroke-width: 1.5px;
 }
+
+/** Temperature Styles **/
+#globalTemperature .y-tempAxis text, #globalTemperature .x-tempAxis text, #polarTemperature .y-tempAxis text, #polarTemperature .x-tempAxis text {
+  fill: #fff !important;
+}
+
+#globalTemperature .x-tempAxis path, #polarTemperature .x-tempAxis path, #globalTemperature .y-tempAxis path, #polarTemperature .y-tempAxis path {
+  display: inline;
+  visibility: visible;
+  stroke: #fff !important;
+}
+
+#globalTemperature .line, #polarTemperature .line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
