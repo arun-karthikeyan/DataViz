@@ -443,7 +443,7 @@ d3.json("Data/Complete.json", function(error, global_complete) {
   }));
 
   // Add grey background lines for context.
-        var grey_background = svg.append("g")
+  var grey_background = svg.append("g")
     .attr("class", "background")
   .selectAll("path")
     .data(global_complete)
@@ -815,6 +815,10 @@ function northPole(){
     var yScale = d3.scaleLinear().range([height, 0]);
     var color = d3.scaleLinear(d3.schemeBlues);
 
+    var colorScale = d3.scaleSequential(d3.interpolateCool)
+                .domain([2016, 1979])
+
+
     var xAxis = d3.axisBottom(xScale);
     var yAxis = d3.axisLeft(yScale);
 
@@ -910,7 +914,7 @@ function northPole(){
         .attr("y",-40)
         .attr("dy",".71em")
         .style("text-anchor","end")
-        .attr("fill", "#000")
+        .attr("fill", "#fff")
         .text("Temperature");
 
     var allMonths = svg.selectAll(".eachMonth")
@@ -925,7 +929,7 @@ function northPole(){
       .attr("d", function(d) {
         return line(d.values);
       })
-      .style("stroke", function(d) { return color(d.year); });
+      .style("stroke", function(d) { return colorScale(d.year); });
     });
 }
     function southPole(){
