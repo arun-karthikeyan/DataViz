@@ -495,7 +495,7 @@ d3.json("Data/Complete.json", function(error, global_complete) {
     .attr("class", "dimension")
     .attr("transform", function(d) { return "translate(" + x(d) + ")"; });
 
-
+  var columnNames = ['Year', 'Temperature', 'Carbon Levels', 'Northern Ice Extent', 'Southern Ice Extent', 'Disaster Frequency'];
   // Add an axis and title.
   g.append("g")
     .attr("class", "axis")
@@ -504,7 +504,7 @@ d3.json("Data/Complete.json", function(error, global_complete) {
   g.append("text")
     .style("text-anchor", "middle")
     .attr("y", -9)
-    .text(function(d) {return d;});
+    .text(function(d, i) {return columnNames[i]; });
 
 });
 
